@@ -1,5 +1,3 @@
 ﻿  form1.cpp
-  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
-  Generating Code...
   form1.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
   TF_ExtinctHero.vcxproj -> C:\Users\ruizc\OneDrive\Documents\Lucas\UPC\Clases\Ciclo II\Programacion II\TF\Git\TF_ExtinctHero\x64\Debug\TF_ExtinctHero.exe
