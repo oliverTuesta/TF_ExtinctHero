@@ -110,7 +110,6 @@ namespace TFExtinctHero {
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
-			this->Click += gcnew System::EventHandler(this, &form1::form1_Click);
 			this->ResumeLayout(false);
 
 		}
