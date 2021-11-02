@@ -24,7 +24,7 @@ namespace TFExtinctHero {
 			buffer = space->Allocate(g, panel1->ClientRectangle);
 
 			//Fondo Menu
-			bmpFondoMenu = gcnew Bitmap("fondoMenu.png");
+			bmpFondoMenu = gcnew Bitmap("archivos/fondoMenu.png");
 			fondoMenuX = fondoMenuY = 0;
 
 		}
@@ -148,8 +148,11 @@ namespace TFExtinctHero {
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
 		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
+		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
 		//Render
 		buffer->Render(g);
+		fondoMenuX++;
+
 	}
 	Void btnPlay_Click(Object^ sender, EventArgs^ e) {
 		
