@@ -24,7 +24,7 @@ namespace TFExtinctHero {
 			buffer = space->Allocate(g, this->ClientRectangle);
 
 			//Fondo Menu
-			bmpFondoMenu = gcnew Bitmap("Archivos/FondoMenu.png");
+			bmpFondoMenu = gcnew Bitmap("fondoMenu.png");
 			fondoMenuX = fondoMenuY = 0;
 
 		}
