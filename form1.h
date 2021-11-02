@@ -151,8 +151,8 @@ namespace TFExtinctHero {
 		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
 		//Render
 		buffer->Render(g);
-		fondoMenuX++;
-
+		fondoMenuX+=50;
+		if (fondoMenuX == panel1->Width * 3)fondoMenuX = 0;
 	}
 	Void btnPlay_Click(Object^ sender, EventArgs^ e) {
 		
