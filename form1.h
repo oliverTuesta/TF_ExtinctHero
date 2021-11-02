@@ -19,9 +19,9 @@ namespace TFExtinctHero {
 		{
 			InitializeComponent();
 			//Buffer
-			g = this->CreateGraphics();
+			g = panel1->CreateGraphics();
 			space = BufferedGraphicsManager::Current;
-			buffer = space->Allocate(g, this->ClientRectangle);
+			buffer = space->Allocate(g, panel1->ClientRectangle);
 
 			//Fondo Menu
 			bmpFondoMenu = gcnew Bitmap("fondoMenu.png");
@@ -38,6 +38,7 @@ namespace TFExtinctHero {
 		//Fondo Menu
 		Bitmap^ bmpFondoMenu;
 		int fondoMenuX, fondoMenuY;
+	private: System::Windows::Forms::Panel^ panel1;
 
 	protected:
 		/// <summary>
@@ -76,6 +77,7 @@ namespace TFExtinctHero {
 			this->btnPlay = (gcnew System::Windows::Forms::Button());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->SuspendLayout();
 			// 
 			// btnPlay
@@ -97,6 +99,7 @@ namespace TFExtinctHero {
 			// lblTitle
 			// 
 			this->lblTitle->AutoSize = true;
+			this->lblTitle->BackColor = System::Drawing::Color::Transparent;
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Old English Text MT", 72, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lblTitle->Location = System::Drawing::Point(254, 180);
@@ -109,8 +112,16 @@ namespace TFExtinctHero {
 			// 
 			// tmrMenu
 			// 
+			this->tmrMenu->Enabled = true;
 			this->tmrMenu->Interval = 50;
 			this->tmrMenu->Tick += gcnew System::EventHandler(this, &form1::tmrMenu_Tick);
+			// 
+			// panel1
+			// 
+			this->panel1->Location = System::Drawing::Point(12, 12);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1208, 729);
+			this->panel1->TabIndex = 2;
 			// 
 			// form1
 			// 
@@ -119,6 +130,7 @@ namespace TFExtinctHero {
 			this->ClientSize = System::Drawing::Size(1232, 753);
 			this->Controls->Add(this->lblTitle);
 			this->Controls->Add(this->btnPlay);
+			this->Controls->Add(this->panel1);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
@@ -135,7 +147,7 @@ namespace TFExtinctHero {
 		//Clear
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
-		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, this->Width * 3, this->Height);
+		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
 		//Render
 		buffer->Render(g);
 	}
