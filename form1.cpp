@@ -1,3 +1,8 @@
 #include "form1.h"
+
 using namespace TFExtinctHero;
-//hola :v, soy leo :c
+using namespace System::Windows::Forms;
+
+void main() {
+	Application::Run(gcnew form1);
+}
