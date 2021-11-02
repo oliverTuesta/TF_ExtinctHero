@@ -1,2 +1,4 @@
 C:\Users\ruizc\OneDrive\Documents\Lucas\UPC\Clases\Ciclo II\Programacion II\TF\Git\TF_ExtinctHero\x64\Debug\TF_ExtinctHero.vcxproj.AssemblyReference.cache
 C:\Users\ruizc\OneDrive\Documents\Lucas\UPC\Clases\Ciclo II\Programacion II\TF\Git\TF_ExtinctHero\x64\Debug\TF_ExtinctHero.exe
+C:\Users\ruizc\OneDrive\Documents\Lucas\UPC\Clases\Ciclo II\Programacion II\TF\Git\TF_ExtinctHero\x64\Debug\TFExtinctHero.form1.resources
+C:\Users\ruizc\OneDrive\Documents\Lucas\UPC\Clases\Ciclo II\Programacion II\TF\Git\TF_ExtinctHero\x64\Debug\TF_ExtinctHero.vcxproj.GenerateResource.cache
