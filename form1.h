@@ -38,6 +38,7 @@ namespace TFExtinctHero {
 		//Fondo Menu
 		Bitmap^ bmpFondoMenu;
 		int fondoMenuX, fondoMenuY;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Panel^ panel1;
 
 	protected:
@@ -74,10 +75,14 @@ namespace TFExtinctHero {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(form1::typeid));
 			this->btnPlay = (gcnew System::Windows::Forms::Button());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->panel1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnPlay
@@ -102,7 +107,7 @@ namespace TFExtinctHero {
 			this->lblTitle->BackColor = System::Drawing::Color::Transparent;
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Old English Text MT", 72, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lblTitle->Location = System::Drawing::Point(254, 180);
+			this->lblTitle->Location = System::Drawing::Point(247, 170);
 			this->lblTitle->Name = L"lblTitle";
 			this->lblTitle->Size = System::Drawing::Size(691, 165);
 			this->lblTitle->TabIndex = 1;
@@ -118,25 +123,38 @@ namespace TFExtinctHero {
 			// 
 			// panel1
 			// 
+			this->panel1->Controls->Add(this->lblTitle);
+			this->panel1->Controls->Add(this->pictureBox1);
 			this->panel1->Location = System::Drawing::Point(12, 12);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1208, 729);
 			this->panel1->TabIndex = 2;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(0, 0);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(1208, 729);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 0;
+			this->pictureBox1->TabStop = false;
 			// 
 			// form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1232, 753);
-			this->Controls->Add(this->lblTitle);
 			this->Controls->Add(this->btnPlay);
 			this->Controls->Add(this->panel1);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -147,12 +165,12 @@ namespace TFExtinctHero {
 		//Clear
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
-		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
+		/*buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
 		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
-		//Render
+		*///Render
 		buffer->Render(g);
-		fondoMenuX+=50;
-		if (fondoMenuX == panel1->Width * 3)fondoMenuX = 0;
+		fondoMenuX += 5;
+		if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
 	}
 	Void btnPlay_Click(Object^ sender, EventArgs^ e) {
 		
