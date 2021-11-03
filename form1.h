@@ -19,12 +19,15 @@ namespace TFExtinctHero {
 		{
 			InitializeComponent();
 			//Buffer
-			g = this->CreateGraphics();
+			g = panel1->CreateGraphics();
 			space = BufferedGraphicsManager::Current;
-			buffer = space->Allocate(g, this->ClientRectangle);
+			buffer = space->Allocate(g, panel1->ClientRectangle);
 
 			//Fondo Menu
-			bmpFondoMenu = gcnew Bitmap("Archivos/FondoMenu.png");
+			bmpFondoMenu = gcnew Bitmap("archivos/fondoMenu.png");
+			bmpTituloMenu = gcnew Bitmap("archivos/titulojuego.png");
+			bmpPLAYMenu = gcnew Bitmap("archivos/btnPLAY.png");
+			bmpENTERMenu = gcnew Bitmap("archivos/ENTER.png");
 			fondoMenuX = fondoMenuY = 0;
 
 		}
@@ -37,7 +40,19 @@ namespace TFExtinctHero {
 		
 		//Fondo Menu
 		Bitmap^ bmpFondoMenu;
+		Bitmap^ bmpTituloMenu;
+		Bitmap^ bmpPLAYMenu;
+		Bitmap^ bmpENTERMenu;
 		int fondoMenuX, fondoMenuY;
+
+	private: System::Windows::Forms::Panel^ panel1;
+
+
+
+
+
+
+
 
 	protected:
 		/// <summary>
@@ -50,8 +65,8 @@ namespace TFExtinctHero {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ btnPlay;
-	private: System::Windows::Forms::Label^ lblTitle;
+
+
 	private: System::Windows::Forms::Timer^ tmrMenu;
 	private: System::ComponentModel::IContainer^ components;
 	protected:
@@ -73,74 +88,63 @@ namespace TFExtinctHero {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
-			this->btnPlay = (gcnew System::Windows::Forms::Button());
-			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->SuspendLayout();
-			// 
-			// btnPlay
-			// 
-			this->btnPlay->BackColor = System::Drawing::Color::Transparent;
-			this->btnPlay->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
-			this->btnPlay->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->btnPlay->FlatAppearance->BorderSize = 0;
-			this->btnPlay->Font = (gcnew System::Drawing::Font(L"Felix Titling", 28.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->btnPlay->Location = System::Drawing::Point(475, 350);
-			this->btnPlay->Name = L"btnPlay";
-			this->btnPlay->Size = System::Drawing::Size(250, 150);
-			this->btnPlay->TabIndex = 0;
-			this->btnPlay->Text = L"PLAY";
-			this->btnPlay->UseVisualStyleBackColor = false;
-			this->btnPlay->Click += gcnew System::EventHandler(this, &form1::btnPlay_Click);
-			// 
-			// lblTitle
-			// 
-			this->lblTitle->AutoSize = true;
-			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Old English Text MT", 72, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->lblTitle->Location = System::Drawing::Point(254, 180);
-			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(691, 165);
-			this->lblTitle->TabIndex = 1;
-			this->lblTitle->Text = L"Extinct Hero";
-			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			this->lblTitle->UseCompatibleTextRendering = true;
 			// 
 			// tmrMenu
 			// 
+			this->tmrMenu->Enabled = true;
 			this->tmrMenu->Interval = 50;
 			this->tmrMenu->Tick += gcnew System::EventHandler(this, &form1::tmrMenu_Tick);
+			// 
+			// panel1
+			// 
+			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(1184, 755);
+			this->panel1->TabIndex = 0;
 			// 
 			// form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1232, 753);
-			this->Controls->Add(this->lblTitle);
-			this->Controls->Add(this->btnPlay);
+			this->BackColor = System::Drawing::SystemColors::Control;
+			this->ClientSize = System::Drawing::Size(1182, 753);
+			this->Controls->Add(this->panel1);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyDown);
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		
+
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
-		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, this->Width * 3, this->Height);
+		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
+		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
+		buffer->Graphics->DrawImage(bmpTituloMenu, 216, 100, 473, 89);
+		buffer->Graphics->DrawImage(bmpPLAYMenu, 338, 250, 230, 83);
+		buffer->Graphics->DrawImage(bmpENTERMenu, 327, 360, 252, 25);
+		/*MessageBox::Show(panel1->Width);*/
 		//Render
 		buffer->Render(g);
+		fondoMenuX += 5;
+		if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
 	}
-	Void btnPlay_Click(Object^ sender, EventArgs^ e) {
-		
+	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
+		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
+			tmrMenu->Enabled = false;
+			buffer->Graphics->Clear(Color::White);
+			buffer->Render(g);
+		}
 	}
 };
 }
