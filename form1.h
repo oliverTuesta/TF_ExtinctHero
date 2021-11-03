@@ -30,6 +30,10 @@ namespace TFExtinctHero {
 			bmpENTERMenu = gcnew Bitmap("archivos/ENTER.png");
 			fondoMenuX = fondoMenuY = 0;
 
+			//Inicio del juego
+			bmpFondoInicio = gcnew Bitmap("archivos/fondoInicio.png");
+			bmpPersonajeAncianoMINI = gcnew Bitmap("archivos/personajes/ancianoMINI.png");
+			bmpPersonajeAncianoFULL = gcnew Bitmap("archivos/personajes/ancianoFULL.png");
 		}
 
 	private:
@@ -44,6 +48,15 @@ namespace TFExtinctHero {
 		Bitmap^ bmpPLAYMenu;
 		Bitmap^ bmpENTERMenu;
 		int fondoMenuX, fondoMenuY;
+
+		//Inicio del juego/lobby
+		Bitmap^ bmpFondoInicio;
+		Bitmap^ bmpPersonajeAncianoMINI;
+		Bitmap^ bmpPersonajeAncianoFULL;
+
+		//Personaje
+		Bitmap^ bmpPersonajePrincipal;
+	private: System::Windows::Forms::Timer^ tmrInicio;
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -90,6 +103,7 @@ namespace TFExtinctHero {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// tmrMenu
@@ -104,6 +118,10 @@ namespace TFExtinctHero {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1184, 755);
 			this->panel1->TabIndex = 0;
+			// 
+			// tmrInicio
+			// 
+			this->tmrInicio->Tick += gcnew System::EventHandler(this, &form1::tmrInicio_Tick);
 			// 
 			// form1
 			// 
@@ -139,11 +157,15 @@ namespace TFExtinctHero {
 		fondoMenuX += 5;
 		if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
 	}
+	Void tmrInicio_Tick(Object^ sender, EventArgs^ e) {
+
+	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
 			tmrMenu->Enabled = false;
-			buffer->Graphics->Clear(Color::White);
-			buffer->Render(g);
+			tmrInicio->Enabled = true;
+			/*buffer->Graphics->Clear(Color::White);
+			buffer->Render(g);*/
 		}
 	}
 };
