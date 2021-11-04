@@ -24,10 +24,10 @@ namespace TFExtinctHero {
 			buffer = space->Allocate(g, panel1->ClientRectangle);
 
 			//Fondo Menu
-			bmpFondoMenu = gcnew Bitmap("archivos/fondoMenu.png");
-			bmpTituloMenu = gcnew Bitmap("archivos/titulojuego.png");
-			bmpPLAYMenu = gcnew Bitmap("archivos/btnPLAY.png");
-			bmpENTERMenu = gcnew Bitmap("archivos/ENTER.png");
+			bmpFondoMenu = gcnew Bitmap("archivos/menu/fondoMenu.png");
+			bmpTituloMenu = gcnew Bitmap("archivos/menu/titulojuego.png");
+			bmpPLAYMenu = gcnew Bitmap("archivos/menu/btnPLAY.png");
+			bmpENTERMenu = gcnew Bitmap("archivos/menu/ENTER.png");
 			fondoMenuX = fondoMenuY = 0;
 
 			//Inicio del juego
