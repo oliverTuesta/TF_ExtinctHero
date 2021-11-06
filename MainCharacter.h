@@ -6,9 +6,6 @@
 using namespace std;
 
 class MainCharacter : public Character {
-private:
-	bool movement;
-
 public:
 	MainCharacter(Bitmap^ bmp) : Character() {
 		x = 220;
@@ -43,7 +40,7 @@ public:
 					movement = false;
 				}
 			}
-			if (x + (width * zoomW) + dx < g->VisibleClipBounds.Width && movement) {
+			if (x + (width * zoomW) < g->VisibleClipBounds.Width && movement) {
 				x += dx;
 			}
 			break;
@@ -65,7 +62,7 @@ public:
 					movement = false;
 				}
 			}
-			if (y + (height * zoomH) + dy < g->VisibleClipBounds.Height && movement) {
+			if (y + (height * zoomH) < g->VisibleClipBounds.Height && movement) {
 				y += dy;
 			}
 			break;
@@ -77,9 +74,19 @@ public:
 
 	}
 
+	void setNivel1() {
+		x = 30;
+		y = 220;
+		dx = dy = 5;
+		zoomW = zoomH = 0.5;
+	}
 
 	Rectangle getFutureRectangle(int xd, int yd) {
 		return Rectangle(x + xd + 5, y + yd + 5, width * zoomW - 10, height * zoomH - 10);
+	}
+
+	Rectangle getViewRectangle() {
+		return Rectangle(x + dx - 50, y + dy - 50, width * zoomW + 100, height * zoomH + 100);
 	}
 
 };

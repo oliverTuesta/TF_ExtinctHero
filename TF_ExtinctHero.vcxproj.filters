@@ -44,5 +44,8 @@
     <ClInclude Include="ObstaculosCasas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cazador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

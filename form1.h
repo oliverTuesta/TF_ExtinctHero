@@ -47,8 +47,12 @@ namespace TFExtinctHero {
 			//Menu del juego
 			bmpPersonajePrincipal = gcnew Bitmap("archivos/personajes/rescatista.png");
 
+			//Nivel 1
+			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
+			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
+
 			//Controller
-			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
+			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador);
 		}
 
 	private:
@@ -69,6 +73,10 @@ namespace TFExtinctHero {
 		Bitmap^ bmpPersonajeAncianoMINI;
 		Bitmap^ bmpPersonajeAncianoFULL;
 		FormInstrucciones^ formInstrucciones;
+
+		//Nivel 1
+		Bitmap^ bmpFondoNivel1;
+		Bitmap^ bmpCazador;
 
 		//Personaje
 		Bitmap^ bmpPersonajePrincipal;
@@ -167,7 +175,16 @@ namespace TFExtinctHero {
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-
+		this->Width = 800;									   //
+		this->Height = 800;									   //
+		panel1->Width = 790;								   //
+		panel1->Height = 760;								   // Aqui se modifica
+		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		CenterToScreen();									   // el inicio o en el
+		juego->getMainCharacter()->setNivel1();				   // nivel 1
+		tmrInicio->Enabled = false;							   //
+		tmrMenu->Enabled = false;							   //
+		tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -192,6 +209,14 @@ namespace TFExtinctHero {
 			formInstrucciones->Show();
 		}
 		else if (juego->colisionMenu() == 2) {
+			this->Width = 800;
+			this->Height = 800;
+			panel1->Width = 790;
+			panel1->Height = 760;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			juego->getMainCharacter()->setNivel1();
+			juego->changetoNivel1();
 			tmrInicio->Enabled = false;
 			tmrNivel1->Enabled = true;
 		}
@@ -204,8 +229,8 @@ namespace TFExtinctHero {
 		//Clear
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
-
-
+		buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
+		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador);
 		//Render
 		buffer->Render(g);
 	}
@@ -222,7 +247,7 @@ namespace TFExtinctHero {
 			CenterToScreen();
 			
 		}
-		if (tmrInicio) { 
+		if (tmrInicio->Enabled) {
 			switch (e->KeyCode)
 			{
 			case Keys::A:case Keys::Left:
@@ -236,6 +261,23 @@ namespace TFExtinctHero {
 				break;
 			case Keys::S:case Keys::Down:
 				juego->getMainCharacter()->move(buffer->Graphics, 'S', juego->getObstaculosCasa());
+				break;
+			}
+		}
+		if (tmrNivel1->Enabled) {
+			switch (e->KeyCode)
+			{
+			case Keys::A:case Keys::Left:
+				juego->getMainCharacter()->move(buffer->Graphics, 'A', juego->getObstaculosNivel1());
+				break;
+			case Keys::D:case Keys::Right:
+				juego->getMainCharacter()->move(buffer->Graphics, 'D', juego->getObstaculosNivel1());
+				break;
+			case Keys::W:case Keys::Up:
+				juego->getMainCharacter()->move(buffer->Graphics, 'W', juego->getObstaculosNivel1());
+				break;
+			case Keys::S:case Keys::Down:
+				juego->getMainCharacter()->move(buffer->Graphics, 'S', juego->getObstaculosNivel1());
 				break;
 			}
 		}
