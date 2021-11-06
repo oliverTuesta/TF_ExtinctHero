@@ -36,6 +36,6 @@ public:
 	void setVisible(bool v) { visible = v; }
 
 	Rectangle getRectangle() {
-		return Rectangle(x + 4, y + 4, width * zoomW - 8, height * zoomH - 8);
+		return Rectangle(x + 5, y + 5, width * zoomW - 10, height * zoomH - 10);
 	}
 };

@@ -133,6 +133,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainCharacter.h" />
+    <ClInclude Include="ObstaculosCasas.h" />
     <ClInclude Include="OldMan.h" />
   </ItemGroup>
   <ItemGroup>

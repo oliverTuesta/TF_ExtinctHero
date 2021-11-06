@@ -226,16 +226,16 @@ namespace TFExtinctHero {
 			switch (e->KeyCode)
 			{
 			case Keys::A:case Keys::Left:
-				juego->getMainCharacter()->move(buffer->Graphics, 'A');
+				juego->getMainCharacter()->move(buffer->Graphics, 'A', juego->getObstaculosCasa());
 				break;
 			case Keys::D:case Keys::Right:
-				juego->getMainCharacter()->move(buffer->Graphics, 'D');
+				juego->getMainCharacter()->move(buffer->Graphics, 'D', juego->getObstaculosCasa());
 				break;
 			case Keys::W:case Keys::Up:
-				juego->getMainCharacter()->move(buffer->Graphics, 'W');
+				juego->getMainCharacter()->move(buffer->Graphics, 'W', juego->getObstaculosCasa());
 				break;
 			case Keys::S:case Keys::Down:
-				juego->getMainCharacter()->move(buffer->Graphics, 'S');
+				juego->getMainCharacter()->move(buffer->Graphics, 'S', juego->getObstaculosCasa());
 				break;
 			}
 		}
