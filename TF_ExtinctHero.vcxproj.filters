@@ -18,9 +18,27 @@
     <ClCompile Include="form1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FormInstrucciones.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="form1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainCharacter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OldMan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FormInstrucciones.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

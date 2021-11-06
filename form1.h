@@ -1,4 +1,6 @@
 #pragma once
+#include "Controller.h"
+#include "FormInstrucciones.h"
 
 namespace TFExtinctHero {
 
@@ -18,6 +20,12 @@ namespace TFExtinctHero {
 		form1(void)
 		{
 			InitializeComponent();
+			//Tamaño del forms
+			this->Width = 900;
+			this->Height = 600;
+			panel1->Width = 900;
+			panel1->Height = 600;
+
 			//Buffer
 			g = panel1->CreateGraphics();
 			space = BufferedGraphicsManager::Current;
@@ -34,6 +42,13 @@ namespace TFExtinctHero {
 			bmpFondoInicio = gcnew Bitmap("archivos/fondoInicio.png");
 			bmpPersonajeAncianoMINI = gcnew Bitmap("archivos/personajes/ancianoMINI.png");
 			bmpPersonajeAncianoFULL = gcnew Bitmap("archivos/personajes/ancianoFULL.png");
+			formInstrucciones = gcnew FormInstrucciones();
+
+			//Menu del juego
+			bmpPersonajePrincipal = gcnew Bitmap("archivos/personajes/rescatista.png");
+
+			//Controller
+			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
 		}
 
 	private:
@@ -53,10 +68,17 @@ namespace TFExtinctHero {
 		Bitmap^ bmpFondoInicio;
 		Bitmap^ bmpPersonajeAncianoMINI;
 		Bitmap^ bmpPersonajeAncianoFULL;
+		FormInstrucciones^ formInstrucciones;
 
 		//Personaje
 		Bitmap^ bmpPersonajePrincipal;
+
+		//Controller
+		Controller* juego;
+
+
 	private: System::Windows::Forms::Timer^ tmrInicio;
+	private: System::Windows::Forms::Timer^ tmrNivel1;
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -104,6 +126,7 @@ namespace TFExtinctHero {
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
+			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// tmrMenu
@@ -122,6 +145,10 @@ namespace TFExtinctHero {
 			// tmrInicio
 			// 
 			this->tmrInicio->Tick += gcnew System::EventHandler(this, &form1::tmrInicio_Tick);
+			// 
+			// tmrNivel1
+			// 
+			this->tmrNivel1->Tick += gcnew System::EventHandler(this, &form1::tmrNivel1_Tick);
 			// 
 			// form1
 			// 
@@ -148,9 +175,9 @@ namespace TFExtinctHero {
 		//Move & Draw
 		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
 		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
-		buffer->Graphics->DrawImage(bmpTituloMenu, 216, 100, 473, 89);
-		buffer->Graphics->DrawImage(bmpPLAYMenu, 338, 250, 230, 83);
-		buffer->Graphics->DrawImage(bmpENTERMenu, 327, 360, 252, 25);
+		buffer->Graphics->DrawImage(bmpTituloMenu, 213, 100, 473, 89);
+		buffer->Graphics->DrawImage(bmpPLAYMenu, 335, 250, 230, 83);
+		buffer->Graphics->DrawImage(bmpENTERMenu, 324, 360, 252, 25);
 		/*MessageBox::Show(panel1->Width);*/
 		//Render
 		buffer->Render(g);
@@ -158,14 +185,59 @@ namespace TFExtinctHero {
 		if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
 	}
 	Void tmrInicio_Tick(Object^ sender, EventArgs^ e) {
+		//Clear
+		buffer->Graphics->Clear(Color::White);
+		//Move & Draw
+		if (juego->colisionMenu() == 1) {
+			formInstrucciones->Show();
+		}
+		else if (juego->colisionMenu() == 2) {
+			tmrInicio->Enabled = false;
+			tmrNivel1->Enabled = true;
+		}
+		buffer->Graphics->DrawImage(bmpFondoInicio, 0, 0, panel1->Width, panel1->Height);
+		juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
+		//Render
+		buffer->Render(g);
+	}
+	Void tmrNivel1_Tick(Object^ sender, EventArgs^ e) {
+		//Clear
+		buffer->Graphics->Clear(Color::White);
+		//Move & Draw
 
+
+		//Render
+		buffer->Render(g);
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
 			tmrMenu->Enabled = false;
 			tmrInicio->Enabled = true;
-			/*buffer->Graphics->Clear(Color::White);
-			buffer->Render(g);*/
+			
+			this->Width = 500;
+			this->Height = 500;
+			panel1->Width = 490;
+			panel1->Height = 470;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			
+		}
+		if (tmrInicio) { 
+			switch (e->KeyCode)
+			{
+			case Keys::A:case Keys::Left:
+				juego->getMainCharacter()->move(buffer->Graphics, 'A');
+				break;
+			case Keys::D:case Keys::Right:
+				juego->getMainCharacter()->move(buffer->Graphics, 'D');
+				break;
+			case Keys::W:case Keys::Up:
+				juego->getMainCharacter()->move(buffer->Graphics, 'W');
+				break;
+			case Keys::S:case Keys::Down:
+				juego->getMainCharacter()->move(buffer->Graphics, 'S');
+				break;
+			}
 		}
 	}
 };
