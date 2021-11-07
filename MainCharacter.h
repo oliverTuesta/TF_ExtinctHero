@@ -86,7 +86,7 @@ public:
 	}
 
 	Rectangle getViewRectangle() {
-		return Rectangle(x + dx - 50, y + dy - 50, width * zoomW + 100, height * zoomH + 100);
+		return Rectangle(x + dx - 50, y + dy - 50, width * zoomW + 90, height * zoomH + 90);
 	}
 
 };

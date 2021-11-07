@@ -20,6 +20,7 @@ namespace TFExtinctHero {
 		form1(void)
 		{
 			InitializeComponent();
+			srand(time(NULL));
 			//Tamaño del forms
 			this->Width = 900;
 			this->Height = 600;

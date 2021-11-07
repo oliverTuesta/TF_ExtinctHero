@@ -55,6 +55,9 @@ public:
 		casasNivel1.push_back(new ObstaculosCasa(470, 505, 60, 55));
 
 		cazadores.push_back(new Cazador(bmpCazador));
+		cazadores.push_back(new Cazador(bmpCazador));
+		cazadores.push_back(new Cazador(bmpCazador));
+		cazadores.push_back(new Cazador(bmpCazador));
 	}
 
 	~Controller() {
@@ -111,6 +114,9 @@ public:
 		g->DrawEllipse(gcnew Pen(Color::DodgerBlue, 3), 
 			this->getMainCharacter()->getX()-60, 
 			this->getMainCharacter()->getY()-60, 150, 150);
+
+		/*g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getViewRectangle());*/
+
 		mainCharacter->draw(g, bmpMainCharacter);
 	}
 

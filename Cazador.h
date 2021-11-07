@@ -8,11 +8,14 @@ private:
 
 public:
 	Cazador(Bitmap^ bmp) :Character() {
-		x = 220;
-		y = 200;
+		x = rand() % (700 - 40 + 1) + 40;
+		y = rand() % (700 - 40 + 1) + 40;
 		width = bmp->Width / 4;
 		height = bmp->Height / 4;
-		dx = dy = 5;
+		if (rand() % 11 > 5) dx = 5;
+		else dx = -5;
+		if (rand() % 11 > 5) dy = 5;
+		else dy = -5;
 		zoomW = zoomH = 0.5;
 		movement = true;
 	}
@@ -54,10 +57,10 @@ public:
 			dy *= 5;
 		}
 		else {
-			if (x + dx < 75 || x + width * zoomW + dx > 650) {
+			if (x + dx < 20 || x + width * zoomW + dx > 750) {
 				dx = -dx;
 			}
-			if (y + dy < 60 || y + height * zoomH + dy > 650) {
+			if (y + dy < 20 || y + height * zoomH + dy > 750) {
 				dy = -dy;
 			}
 			if (dx > 0) { idy = 2; }
