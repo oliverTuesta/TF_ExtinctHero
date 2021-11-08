@@ -19,10 +19,10 @@ public:
 
 	~MainCharacter() {}
 	
-	void move(Graphics^ g, char i, vector<ObstaculosCasa*> casas) {
+	void move(Graphics^ g, int i, vector<ObstaculosCasa*> casas) {
 		switch (i)
 		{
-		case 'A':
+		case 65: case 37: 
 			idy = 1;
 			for (int i = 0; i < casas.size(); i++)	{
 				if (this->getFutureRectangle(-10, 0).IntersectsWith(casas.at(i)->getRectangle())) {
@@ -33,7 +33,7 @@ public:
 				x -= dx;
 			}
 			break;
-		case 'D':
+		case 68: case 39:
 			idy = 2;
 			for (int i = 0; i < casas.size(); i++) {
 				if (this->getFutureRectangle(10, 0).IntersectsWith(casas.at(i)->getRectangle())) {
@@ -44,7 +44,7 @@ public:
 				x += dx;
 			}
 			break;
-		case 'W':
+		case 87: case 38:
 			idy = 3;
 			for (int i = 0; i < casas.size(); i++) {
 				if (this->getFutureRectangle(0, -10).IntersectsWith(casas.at(i)->getRectangle())) {
@@ -55,7 +55,7 @@ public:
 				y -= dy;
 			}
 			break;
-		case 'S':
+		case 83: case 40:
 			idy = 0;
 			for (int i = 0; i < casas.size(); i++) {
 				if (this->getFutureRectangle(0, 10).IntersectsWith(casas.at(i)->getRectangle())) {

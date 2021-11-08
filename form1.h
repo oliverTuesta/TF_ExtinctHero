@@ -147,8 +147,9 @@ namespace TFExtinctHero {
 			// panel1
 			// 
 			this->panel1->Location = System::Drawing::Point(0, 0);
+			this->panel1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1184, 755);
+			this->panel1->Size = System::Drawing::Size(888, 613);
 			this->panel1->TabIndex = 0;
 			// 
 			// tmrInicio
@@ -161,16 +162,18 @@ namespace TFExtinctHero {
 			// 
 			// form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1182, 753);
+			this->ClientSize = System::Drawing::Size(886, 612);
 			this->Controls->Add(this->panel1);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyDown);
+			this->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &form1::form1_KeyPress);
 			this->ResumeLayout(false);
 
 		}
@@ -249,39 +252,15 @@ namespace TFExtinctHero {
 			
 		}
 		if (tmrInicio->Enabled) {
-			switch (e->KeyCode)
-			{
-			case Keys::A:case Keys::Left:
-				juego->getMainCharacter()->move(buffer->Graphics, 'A', juego->getObstaculosCasa());
-				break;
-			case Keys::D:case Keys::Right:
-				juego->getMainCharacter()->move(buffer->Graphics, 'D', juego->getObstaculosCasa());
-				break;
-			case Keys::W:case Keys::Up:
-				juego->getMainCharacter()->move(buffer->Graphics, 'W', juego->getObstaculosCasa());
-				break;
-			case Keys::S:case Keys::Down:
-				juego->getMainCharacter()->move(buffer->Graphics, 'S', juego->getObstaculosCasa());
-				break;
-			}
+			
+				juego->getMainCharacter()->move(buffer->Graphics, (int)e->KeyCode, juego->getObstaculosCasa());
 		}
 		if (tmrNivel1->Enabled) {
-			switch (e->KeyCode)
-			{
-			case Keys::A:case Keys::Left:
-				juego->getMainCharacter()->move(buffer->Graphics, 'A', juego->getObstaculosNivel1());
-				break;
-			case Keys::D:case Keys::Right:
-				juego->getMainCharacter()->move(buffer->Graphics, 'D', juego->getObstaculosNivel1());
-				break;
-			case Keys::W:case Keys::Up:
-				juego->getMainCharacter()->move(buffer->Graphics, 'W', juego->getObstaculosNivel1());
-				break;
-			case Keys::S:case Keys::Down:
-				juego->getMainCharacter()->move(buffer->Graphics, 'S', juego->getObstaculosNivel1());
-				break;
-			}
+				juego->getMainCharacter()->move(buffer->Graphics, (int)e->KeyCode, juego->getObstaculosNivel1());
+			
 		}
 	}
+private: System::Void form1_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+}
 };
 }
