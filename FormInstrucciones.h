@@ -22,12 +22,13 @@ namespace TFExtinctHero {
 			pic1 = pic2 = true;
 
 			pictureBox3->Visible = false;
-			pictureBox4->Visible = false;
+			pictureBox4->Visible = false;			
 
 		}
 
 	private:
 		bool pic1, pic2;
+
 
 
 	protected:
@@ -136,8 +137,9 @@ namespace TFExtinctHero {
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"FormInstrucciones";
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->StartPosition = System::Windows::Forms::FormStartPosition::Manual;
 			this->Text = L"FormInstrucciones";
+			this->Load += gcnew System::EventHandler(this, &FormInstrucciones::FormInstrucciones_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -151,13 +153,22 @@ namespace TFExtinctHero {
 			pic1 = false;
 			pictureBox2->Visible = false;
 			pictureBox3->Visible = true;
-		}else if (!pic1) {
+		}
+		else if (!pic2) {
+			this->Close();
+			return;
+		}
+		else if (!pic1) {
 			//pic2 = true;
 			pictureBox3->Visible = false;
 			pictureBox4->Visible = true;
-			button1->Visible = false;
+			button1->Text = "Cerrar Ventana";
+			pic2 = false;
 		}
 		
+	}
+	Void FormInstrucciones_Load(System::Object^ sender, System::EventArgs^ e) {
+		this->CenterToParent();
 	}
 };
 }
