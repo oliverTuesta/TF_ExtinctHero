@@ -19,7 +19,7 @@ public:
 
 	~MainCharacter() {}
 	
-	void move(Graphics^ g, int i, vector<ObstaculosCasa*> casas) {
+	/*void move(Graphics^ g, int i, vector<ObstaculosCasa*> casas) {
 		switch (i)
 		{
 		case 65: case 37: 
@@ -72,6 +72,70 @@ public:
 		if (idx > 3)idx = 0;
 		movement = true;
 
+	}*/
+
+	void moveLeft(Graphics^ g, vector<ObstaculosCasa*> casas) {
+		idy = 1;
+		for (int i = 0; i < casas.size(); i++) {
+			if (this->getFutureRectangle(-10, 0).IntersectsWith(casas.at(i)->getRectangle())) {
+				movement = false;
+			}
+		}
+		if (x > 0 && movement) {
+			x -= dx;
+		}
+
+		idx++;
+		if (idx > 3)idx = 0;
+		movement = true;
+	}
+
+	void moveRight(Graphics^ g, vector<ObstaculosCasa*> casas) {
+		idy = 2;
+		for (int i = 0; i < casas.size(); i++) {
+			if (this->getFutureRectangle(10, 0).IntersectsWith(casas.at(i)->getRectangle())) {
+				movement = false;
+			}
+		}
+		if (x + (width * zoomW) < g->VisibleClipBounds.Width && movement) {
+			x += dx;
+		}
+
+		idx++;
+		if (idx > 3)idx = 0;
+		movement = true;
+	}
+
+	void moveUp(Graphics^ g, vector<ObstaculosCasa*> casas) {
+		idy = 3;
+		for (int i = 0; i < casas.size(); i++) {
+			if (this->getFutureRectangle(0, -10).IntersectsWith(casas.at(i)->getRectangle())) {
+				movement = false;
+			}
+		}
+		if (y > 0 && movement) {
+			y -= dy;
+		}
+
+		idx++;
+		if (idx > 3)idx = 0;
+		movement = true;
+	}
+
+	void moveDown(Graphics^ g, vector<ObstaculosCasa*> casas) {
+		idy = 0;
+		for (int i = 0; i < casas.size(); i++) {
+			if (this->getFutureRectangle(0, 10).IntersectsWith(casas.at(i)->getRectangle())) {
+				movement = false;
+			}
+		}
+		if (y + (height * zoomH) < g->VisibleClipBounds.Height && movement) {
+			y += dy;
+		}
+
+		idx++;
+		if (idx > 3)idx = 0;
+		movement = true;
 	}
 
 	void setNivel1() {

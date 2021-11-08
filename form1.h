@@ -54,6 +54,7 @@ namespace TFExtinctHero {
 
 			//Controller
 			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador);
+			teclaA = teclaD = teclaW = teclaS = false;
 		}
 
 	private:
@@ -84,6 +85,7 @@ namespace TFExtinctHero {
 
 		//Controller
 		Controller* juego;
+		bool teclaA, teclaD, teclaW, teclaS;
 
 
 	private: System::Windows::Forms::Timer^ tmrInicio;
@@ -147,9 +149,9 @@ namespace TFExtinctHero {
 			// panel1
 			// 
 			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->panel1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(888, 613);
+			this->panel1->Size = System::Drawing::Size(1184, 754);
 			this->panel1->TabIndex = 0;
 			// 
 			// tmrInicio
@@ -162,33 +164,33 @@ namespace TFExtinctHero {
 			// 
 			// form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(886, 612);
+			this->ClientSize = System::Drawing::Size(1181, 753);
 			this->Controls->Add(this->panel1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyDown);
-			this->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &form1::form1_KeyPress);
+			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyUp);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		this->Width = 800;									   //
-		this->Height = 800;									   //
-		panel1->Width = 790;								   //
-		panel1->Height = 760;								   // Aqui se modifica
-		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
-		CenterToScreen();									   // el inicio o en el
-		juego->getMainCharacter()->setNivel1();				   // nivel 1
-		tmrInicio->Enabled = false;							   //
-		tmrMenu->Enabled = false;							   //
-		tmrNivel1->Enabled = true;							   //
+		//this->Width = 800;									   //
+		//this->Height = 800;									   //
+		//panel1->Width = 790;								   //
+		//panel1->Height = 760;								   // Aqui se modifica
+		//buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		//CenterToScreen();									   // el inicio o en el
+		//juego->getMainCharacter()->setNivel1();				   // nivel 1
+		//tmrInicio->Enabled = false;							   //
+		//tmrMenu->Enabled = false;							   //
+		//tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -210,6 +212,10 @@ namespace TFExtinctHero {
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
 		if (juego->colisionMenu() == 1) {
+			teclaA = false;
+			teclaD = false;
+			teclaW = false;
+			teclaS = false;
 			formInstrucciones->Show();
 		}
 		else if (juego->colisionMenu() == 2) {
@@ -251,16 +257,62 @@ namespace TFExtinctHero {
 			CenterToScreen();
 			
 		}
+		
+		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+			teclaA = true;
+		}
+		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+			teclaD = true;
+		}
+		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+			teclaW = true;
+		}
+		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+			teclaS = true;
+		}
+		
 		if (tmrInicio->Enabled) {
-			
-				juego->getMainCharacter()->move(buffer->Graphics, (int)e->KeyCode, juego->getObstaculosCasa());
+			if (teclaA) {
+				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosCasa());
+			}
+			if (teclaD) {
+				juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosCasa());
+			}
+			if (teclaW) {
+				juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosCasa());
+			}
+			if (teclaS) {
+				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosCasa());
+			}
 		}
 		if (tmrNivel1->Enabled) {
-				juego->getMainCharacter()->move(buffer->Graphics, (int)e->KeyCode, juego->getObstaculosNivel1());
-			
+			if (teclaA) {
+				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel1());
+			}
+			if (teclaD) {
+				juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosNivel1());
+			}
+			if (teclaW) {
+				juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosNivel1());
+			}
+			if (teclaS) {
+				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
+			}
 		}
 	}
-private: System::Void form1_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
-}
+	Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {
+		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+			teclaA = false;
+		}
+		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+			teclaD = false;
+		}
+		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+			teclaW = false;
+		}
+		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+			teclaS = false;
+		}
+	}
 };
 }
