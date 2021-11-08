@@ -234,6 +234,7 @@ namespace TFExtinctHero {
 		juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
 		//Render
 		buffer->Render(g);
+		mover();
 	}
 	Void tmrNivel1_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -243,6 +244,7 @@ namespace TFExtinctHero {
 		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador);
 		//Render
 		buffer->Render(g);
+		mover();
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
@@ -271,6 +273,23 @@ namespace TFExtinctHero {
 			teclaS = true;
 		}
 		
+		
+	}
+	Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {
+		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+			teclaA = false;
+		}
+		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+			teclaD = false;
+		}
+		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+			teclaW = false;
+		}
+		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+			teclaS = false;
+		}
+	}
+	void mover() {
 		if (tmrInicio->Enabled) {
 			if (teclaA) {
 				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosCasa());
@@ -298,20 +317,6 @@ namespace TFExtinctHero {
 			if (teclaS) {
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
 			}
-		}
-	}
-	Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {
-		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
-			teclaA = false;
-		}
-		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
-			teclaD = false;
-		}
-		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
-			teclaW = false;
-		}
-		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
-			teclaS = false;
 		}
 	}
 };
