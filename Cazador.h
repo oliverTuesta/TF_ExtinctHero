@@ -57,11 +57,17 @@ public:
 			dy *= 5;
 		}
 		else {
-			if (x + dx < 20 || x + width * zoomW + dx > 750) {
-				dx = -dx;
+			if (x + dx < 20) {
+				dx = abs(dx);
 			}
-			if (y + dy < 20 || y + height * zoomH + dy > 750) {
-				dy = -dy;
+			if (x + width * zoomW + dx > 750) {
+				dx = -abs(dx);
+			}
+			if (y + dy < 20) {
+				dy = abs(dy);
+			}
+			if (y + height * zoomH + dy > 750) {
+				dy = -abs(dy);
 			}
 			if (dx > 0) { idy = 2; }
 			if (dx < 0) { idy = 1; }
