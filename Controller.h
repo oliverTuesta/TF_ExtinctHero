@@ -120,6 +120,15 @@ public:
 		mainCharacter->draw(g, bmpMainCharacter);
 	}
 
+	void colisionNivel1() {
+		for (int i = 0; i < cazadores.size(); i++)
+		{
+			if (cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
+				cazadores.at(i)->setVisible(false);
+			}
+		}
+	}
+
 	MainCharacter* getMainCharacter() { return mainCharacter; }
 
 	vector<ObstaculosCasa*> getObstaculosCasa() { return casasMenu; }

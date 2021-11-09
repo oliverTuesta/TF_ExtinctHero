@@ -181,16 +181,16 @@ namespace TFExtinctHero {
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		//this->Width = 800;									   //
-		//this->Height = 800;									   //
-		//panel1->Width = 790;								   //
-		//panel1->Height = 760;								   // Aqui se modifica
-		//buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
-		//CenterToScreen();									   // el inicio o en el
-		//juego->getMainCharacter()->setNivel1();				   // nivel 1
-		//tmrInicio->Enabled = false;							   //
-		//tmrMenu->Enabled = false;							   //
-		//tmrNivel1->Enabled = true;							   //
+		this->Width = 800;									   //
+		this->Height = 800;									   //
+		panel1->Width = 790;								   //
+		panel1->Height = 760;								   // Aqui se modifica
+		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		CenterToScreen();									   // el inicio o en el
+		juego->getMainCharacter()->setNivel1();				   // nivel 1
+		tmrInicio->Enabled = false;							   //
+		tmrMenu->Enabled = false;							   //
+		tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -272,7 +272,9 @@ namespace TFExtinctHero {
 		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
 			teclaS = true;
 		}
-		
+		if (e->KeyCode == Keys::Space) {
+			juego->colisionNivel1();
+		}
 		
 	}
 	Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {

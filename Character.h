@@ -24,9 +24,14 @@ public:
 	~Character() {}
 
 	void draw(Graphics^ g, Bitmap^ bmp) {
-		Rectangle sectionShown = Rectangle(idx * width, idy * height, width, height);
+		if (visible) {
+			Rectangle sectionShown = Rectangle(idx * width, idy * height, width, height);
+			Rectangle zoom = Rectangle(x, y, width * zoomW, height * zoomH);
+			g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);
+		}
+		/*Rectangle sectionShown = Rectangle(idx * width, idy * height, width, height);
 		Rectangle zoom = Rectangle(x, y, width * zoomW, height * zoomH);
-		g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);
+		g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);*/
 	}
 
 	virtual void move() {}
