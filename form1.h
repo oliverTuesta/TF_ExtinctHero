@@ -149,10 +149,11 @@ namespace TFExtinctHero {
 			// panel1
 			// 
 			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->panel1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1184, 754);
+			this->panel1->Size = System::Drawing::Size(888, 613);
 			this->panel1->TabIndex = 0;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &form1::panel1_Paint);
 			// 
 			// tmrInicio
 			// 
@@ -164,12 +165,12 @@ namespace TFExtinctHero {
 			// 
 			// form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1181, 753);
+			this->ClientSize = System::Drawing::Size(886, 612);
 			this->Controls->Add(this->panel1);
-			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
@@ -181,16 +182,16 @@ namespace TFExtinctHero {
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		this->Width = 800;									   //
-		this->Height = 800;									   //
-		panel1->Width = 790;								   //
-		panel1->Height = 760;								   // Aqui se modifica
-		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
-		CenterToScreen();									   // el inicio o en el
-		juego->getMainCharacter()->setNivel1();				   // nivel 1
-		tmrInicio->Enabled = false;							   //
-		tmrMenu->Enabled = false;							   //
-		tmrNivel1->Enabled = true;							   //
+		//this->Width = 800;									   //
+		//this->Height = 800;									   //
+		//panel1->Width = 790;								   //
+		//panel1->Height = 760;								   // Aqui se modifica
+		//buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		//CenterToScreen();									   // el inicio o en el
+		//juego->getMainCharacter()->setNivel1();				   // nivel 1
+		//tmrInicio->Enabled = false;							   //
+		//tmrMenu->Enabled = false;							   //
+		//tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -321,5 +322,7 @@ namespace TFExtinctHero {
 			}
 		}
 	}
+private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
 };
 }
