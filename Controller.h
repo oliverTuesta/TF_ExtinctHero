@@ -3,6 +3,7 @@
 #include "OldMan.h"
 #include "Cazador.h"
 #include "PokemonIcons.h"
+#include "Pokemon.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -19,6 +20,7 @@ private:
 	OldMan* oldman;
 	Mensaje* mensaje;
 	vector<Cazador*>cazadores;
+	vector<Pokemon*>pokemones;
 	vector<PokemonIcon*>pokemonIcons;
 	vector<ObstaculosCasa*>casasMenu;
 	vector<ObstaculosCasa*>casasNivel1;
@@ -119,6 +121,7 @@ public:
 			this->getMainCharacter()->getX()-60, 
 			this->getMainCharacter()->getY()-60, 150, 150);
 
+
 		/*g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getViewRectangle());*/
 
 		mainCharacter->draw(g, bmpMainCharacter);
@@ -133,6 +136,13 @@ public:
 		for (int i = 0; i < cazadores.size(); i++) {
 			if (cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
 				cazadores.at(i)->setVisible(false);
+				switch (pokemones.size())
+				{
+				case 0: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.1, 0.1)); break;
+				case 2: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 3: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5, 1)); break;
+				}
 				mensaje = new Mensaje(g, 255, 44);
 				pokemonIcons.push_back(new PokemonIcon(g, 30, 30, pokemonIcons.size()));
 			}
@@ -152,6 +162,19 @@ public:
 	vector<ObstaculosCasa*> getObstaculosCasa() { return casasMenu; }
 	vector<ObstaculosCasa*> getObstaculosNivel1() { return casasNivel1; }
 
+	void drawPokemon(Graphics^ g, Bitmap^ bmp1, Bitmap^ bmp2, Bitmap^ bmp3, Bitmap^ bmp4, Bitmap^ bmp5) {
+		for (int i = 0; i < pokemones.size(); i++) {
+			switch (i)
+			{
+			case 0: pokemones.at(i)->draw(g, bmp1); break;
+			case 1: pokemones.at(i)->draw(g, bmp2); break;
+			case 2: pokemones.at(i)->draw(g, bmp3); break;
+			case 3: pokemones.at(i)->draw(g, bmp4); break;
+			case 4: pokemones.at(i)->draw(g, bmp5); break;
+			}
+			pokemones.at(i)->move();
+		}
+	}
 	void drawPokemonIcon(Graphics^ g, Bitmap^ bmp1, Bitmap^ bmp2, Bitmap^ bmp3, Bitmap^ bmp4, Bitmap^ bmp5) {
 		for (int i = 0; i < pokemonIcons.size(); i++) {
 			switch (i)

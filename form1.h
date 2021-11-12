@@ -118,6 +118,7 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Timer^ tmrInicio;
 	private: System::Windows::Forms::Timer^ tmrNivel1;
 	private: System::Windows::Forms::Timer^ tmrMensaje;
+private: System::Windows::Forms::Timer^ tmrTiempo;
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -167,6 +168,7 @@ namespace TFExtinctHero {
 			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrMensaje = (gcnew System::Windows::Forms::Timer(this->components));
+			this->tmrTiempo = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// tmrMenu
@@ -195,6 +197,11 @@ namespace TFExtinctHero {
 			// 
 			this->tmrMensaje->Interval = 3000;
 			this->tmrMensaje->Tick += gcnew System::EventHandler(this, &form1::tmrMensaje_Tick);
+			// 
+			// tmrTiempo
+			// 
+			this->tmrTiempo->Interval = 1000;
+			this->tmrTiempo->Tick += gcnew System::EventHandler(this, &form1::tmrTiempo_Tick);
 			// 
 			// form1
 			// 
@@ -277,6 +284,7 @@ namespace TFExtinctHero {
 		buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
 		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
 		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
+		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
 		//Render
 		buffer->Render(g);
 		mover();
@@ -360,6 +368,9 @@ namespace TFExtinctHero {
 	}
 	Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {
 		tmrMensaje->Enabled = false;
+	}
+	Void tmrTiempo_Tick(System::Object^ sender, System::EventArgs^ e) {
+
 	}
 };
 }

@@ -137,6 +137,7 @@
     <ClInclude Include="Mensaje.h" />
     <ClInclude Include="ObstaculosCasas.h" />
     <ClInclude Include="OldMan.h" />
+    <ClInclude Include="Pokemon.h" />
     <ClInclude Include="PokemonIcons.h" />
   </ItemGroup>
   <ItemGroup>
