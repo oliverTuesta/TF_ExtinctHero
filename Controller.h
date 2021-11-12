@@ -139,7 +139,7 @@ public:
 				switch (pokemones.size())
 				{
 				case 0: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
-				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.1, 0.1)); break;
+				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5)); break;
 				case 2: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
 				case 3: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5, 1)); break;
 				}

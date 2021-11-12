@@ -31,6 +31,7 @@ namespace TFExtinctHero {
 			g = panel1->CreateGraphics();
 			space = BufferedGraphicsManager::Current;
 			buffer = space->Allocate(g, panel1->ClientRectangle);
+			label1->Visible = false;
 
 			//Fondo Menu
 			bmpFondoMenu = gcnew Bitmap("archivos/menu/fondoMenu.png");
@@ -51,6 +52,7 @@ namespace TFExtinctHero {
 			//Nivel 1
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
+			tiempoNivel1 = 60;
 
 			//Controller
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
@@ -93,6 +95,7 @@ namespace TFExtinctHero {
 		//Nivel 1
 		Bitmap^ bmpFondoNivel1;
 		Bitmap^ bmpCazador;
+		int tiempoNivel1;
 
 		//Personaje
 		Bitmap^ bmpPersonajePrincipal;
@@ -118,7 +121,9 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Timer^ tmrInicio;
 	private: System::Windows::Forms::Timer^ tmrNivel1;
 	private: System::Windows::Forms::Timer^ tmrMensaje;
-private: System::Windows::Forms::Timer^ tmrTiempo;
+private: System::Windows::Forms::Label^ label1;
+private: System::Windows::Forms::Timer^ tmrSegundo;
+
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -165,10 +170,12 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			this->components = (gcnew System::ComponentModel::Container());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrMensaje = (gcnew System::Windows::Forms::Timer(this->components));
-			this->tmrTiempo = (gcnew System::Windows::Forms::Timer(this->components));
+			this->tmrSegundo = (gcnew System::Windows::Forms::Timer(this->components));
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tmrMenu
@@ -179,11 +186,21 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			// 
 			// panel1
 			// 
+			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
 			this->panel1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(1184, 754);
 			this->panel1->TabIndex = 0;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(12, 9);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(140, 17);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"Tiempo Restante: 60";
 			// 
 			// tmrInicio
 			// 
@@ -198,10 +215,10 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			this->tmrMensaje->Interval = 3000;
 			this->tmrMensaje->Tick += gcnew System::EventHandler(this, &form1::tmrMensaje_Tick);
 			// 
-			// tmrTiempo
+			// tmrSegundo
 			// 
-			this->tmrTiempo->Interval = 1000;
-			this->tmrTiempo->Tick += gcnew System::EventHandler(this, &form1::tmrTiempo_Tick);
+			this->tmrSegundo->Interval = 1000;
+			this->tmrSegundo->Tick += gcnew System::EventHandler(this, &form1::tmrSegundo_Tick);
 			// 
 			// form1
 			// 
@@ -217,21 +234,23 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			this->Load += gcnew System::EventHandler(this, &form1::form1_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyDown);
 			this->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::form1_KeyUp);
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		this->Width = 800;									   //
-		this->Height = 800;									   //
-		panel1->Width = 790;								   //
-		panel1->Height = 760;								   // Aqui se modifica
-		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
-		CenterToScreen();									   // el inicio o en el
-		juego->getMainCharacter()->setNivel1();				   // nivel 1
-		tmrInicio->Enabled = false;							   //
-		tmrMenu->Enabled = false;							   //
-		tmrNivel1->Enabled = true;							   //
+		//this->Width = 800;									   //
+		//this->Height = 800;									   //
+		//panel1->Width = 790;								   //
+		//panel1->Height = 760;								   // Aqui se modifica
+		//buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		//CenterToScreen();									   // el inicio o en el
+		//juego->getMainCharacter()->setNivel1();				   // nivel 1
+		//tmrInicio->Enabled = false;							   //
+		//tmrMenu->Enabled = false;							   //
+		//tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -270,6 +289,8 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			juego->changetoNivel1();
 			tmrInicio->Enabled = false;
 			tmrNivel1->Enabled = true;
+			tmrSegundo->Enabled = true;
+			label1->Visible = true;
 		}
 		buffer->Graphics->DrawImage(bmpFondoInicio, 0, 0, panel1->Width, panel1->Height);
 		juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
@@ -285,9 +306,11 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
 		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
 		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
+		label1->Text = "Tiempo Restante: " + tiempoNivel1;
 		//Render
 		buffer->Render(g);
 		mover();
+
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
@@ -369,8 +392,8 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 	Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {
 		tmrMensaje->Enabled = false;
 	}
-	Void tmrTiempo_Tick(System::Object^ sender, System::EventArgs^ e) {
-
+	Void tmrSegundo_Tick(Object^ sender, EventArgs^ e) {
+		tiempoNivel1--;
 	}
 };
 }
