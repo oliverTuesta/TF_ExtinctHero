@@ -189,4 +189,6 @@ public:
 		}
 	}
 
+	int getPokemonSize() { return pokemones.size(); }
+
 };

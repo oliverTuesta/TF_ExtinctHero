@@ -1,6 +1,7 @@
 #pragma once
 #include "Controller.h"
 #include "FormInstrucciones.h"
+#include "MensajeDelAdmin.h"
 
 namespace TFExtinctHero {
 
@@ -53,6 +54,7 @@ namespace TFExtinctHero {
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
 			tiempoNivel1 = 60;
+			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Controller
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
@@ -95,6 +97,7 @@ namespace TFExtinctHero {
 		//Nivel 1
 		Bitmap^ bmpFondoNivel1;
 		Bitmap^ bmpCazador;
+		MensajeDelAdmin^ mensajedelAdmin;
 		int tiempoNivel1;
 
 		//Personaje
@@ -196,9 +199,13 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 			// label1
 			// 
 			this->label1->AutoSize = true;
+			this->label1->BackColor = System::Drawing::Color::Olive;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->ForeColor = System::Drawing::Color::White;
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(140, 17);
+			this->label1->Size = System::Drawing::Size(205, 25);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Tiempo Restante: 60";
 			// 
@@ -310,6 +317,10 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 		//Render
 		buffer->Render(g);
 		mover();
+		if (juego->getPokemonSize() == 4) {
+			mensajedelAdmin->Show();
+			tmrNivel1->Enabled = false;
+		}
 
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {

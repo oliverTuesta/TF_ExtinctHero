@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="form1.cpp" />
     <ClCompile Include="FormInstrucciones.cpp" />
+    <ClCompile Include="MensajeDelAdmin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cazador.h" />
@@ -135,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="Mensaje.h" />
+    <ClInclude Include="MensajeDelAdmin.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ObstaculosCasas.h" />
     <ClInclude Include="OldMan.h" />
     <ClInclude Include="Pokemon.h" />
@@ -146,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInstrucciones.resx">
       <DependentUpon>FormInstrucciones.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MensajeDelAdmin.resx">
+      <DependentUpon>MensajeDelAdmin.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
