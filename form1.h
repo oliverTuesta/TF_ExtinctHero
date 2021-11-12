@@ -53,8 +53,22 @@ namespace TFExtinctHero {
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
 
 			//Controller
-			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador);
+			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
+			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador, bmpMensaje);
 			teclaA = teclaD = teclaW = teclaS = false;
+
+			//Pokemon
+			bmpWartortleIcon = gcnew Bitmap("archivos/icons/wartortleIcon.png");
+			bmpBulbasaurIcon = gcnew Bitmap("archivos/icons/bulbasaurIcon.png");
+			bmpPikachuIcon = gcnew Bitmap("archivos/icons/pikachuIcon.png");
+			bmpSnorlaxIcon = gcnew Bitmap("archivos/icons/snorlaxIcon.png");
+			bmpPsyduckIcon = gcnew Bitmap("archivos/icons/psyduckIcon.png");
+
+			bmpWartortle = gcnew Bitmap("archivos/pokemon/wartortle.png");
+			bmpBulbasaur = gcnew Bitmap("archivos/pokemon/bulbasaur.png");
+			bmpPikachu = gcnew Bitmap("archivos/pokemon/pikachu.png");
+			bmpSnorlax = gcnew Bitmap("archivos/pokemon/snorlax.png");
+			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck.png");
 		}
 
 	private:
@@ -85,11 +99,25 @@ namespace TFExtinctHero {
 
 		//Controller
 		Controller* juego;
+		Bitmap^ bmpMensaje;
 		bool teclaA, teclaD, teclaW, teclaS;
+
+		//Pokemons
+		Bitmap^ bmpWartortleIcon; 
+		Bitmap^ bmpWartortle;
+		Bitmap^ bmpBulbasaurIcon;
+		Bitmap^ bmpBulbasaur;
+		Bitmap^ bmpPikachuIcon;
+		Bitmap^ bmpPikachu;
+		Bitmap^ bmpSnorlaxIcon;
+		Bitmap^ bmpSnorlax;
+		Bitmap^ bmpPsyduckIcon;
+		Bitmap^ bmpPsyduck;
 
 
 	private: System::Windows::Forms::Timer^ tmrInicio;
 	private: System::Windows::Forms::Timer^ tmrNivel1;
+	private: System::Windows::Forms::Timer^ tmrMensaje;
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -138,6 +166,7 @@ namespace TFExtinctHero {
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->tmrMensaje = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// tmrMenu
@@ -161,6 +190,11 @@ namespace TFExtinctHero {
 			// tmrNivel1
 			// 
 			this->tmrNivel1->Tick += gcnew System::EventHandler(this, &form1::tmrNivel1_Tick);
+			// 
+			// tmrMensaje
+			// 
+			this->tmrMensaje->Interval = 3000;
+			this->tmrMensaje->Tick += gcnew System::EventHandler(this, &form1::tmrMensaje_Tick);
 			// 
 			// form1
 			// 
@@ -241,7 +275,8 @@ namespace TFExtinctHero {
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
 		buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
-		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador);
+		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
+		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
 		//Render
 		buffer->Render(g);
 		mover();
@@ -273,7 +308,9 @@ namespace TFExtinctHero {
 			teclaS = true;
 		}
 		if (e->KeyCode == Keys::Space) {
-			juego->colisionNivel1();
+			if (juego->colisionNivel1(g, bmpMensaje)) {
+				tmrMensaje->Enabled = true;
+			}
 		}
 		
 	}
@@ -320,6 +357,9 @@ namespace TFExtinctHero {
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
 			}
 		}
+	}
+	Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {
+		tmrMensaje->Enabled = false;
 	}
 };
 }

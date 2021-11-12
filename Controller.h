@@ -2,6 +2,7 @@
 #include "MainCharacter.h"
 #include "OldMan.h"
 #include "Cazador.h"
+#include "PokemonIcons.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -16,12 +17,14 @@ private:
 	//----- Atributos del Menu/Inicio -----
 	MainCharacter* mainCharacter;
 	OldMan* oldman;
+	Mensaje* mensaje;
 	vector<Cazador*>cazadores;
+	vector<PokemonIcon*>pokemonIcons;
 	vector<ObstaculosCasa*>casasMenu;
 	vector<ObstaculosCasa*>casasNivel1;
 
 public:
-	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador) {
+	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpmensaje) {
 		//---------- Constructor del Menu/Inicio ----------
 		mainCharacter = new MainCharacter(bmpMainCharacter);
 		oldman = new OldMan(bmpOldMan);
@@ -54,14 +57,15 @@ public:
 		casasNivel1.push_back(new ObstaculosCasa(360, 505, 70, 55));
 		casasNivel1.push_back(new ObstaculosCasa(470, 505, 60, 55));
 
-		cazadores.push_back(new Cazador(bmpCazador));
-		cazadores.push_back(new Cazador(bmpCazador));
-		cazadores.push_back(new Cazador(bmpCazador));
-		cazadores.push_back(new Cazador(bmpCazador));
+		for (int i = 0; i < 4; i++) {
+			cazadores.push_back(new Cazador(bmpCazador));
+		}
 	}
 
 	~Controller() {
 		delete mainCharacter;
+		delete oldman;
+		delete mensaje;
 	}
 
 	//------------------ INICIO/MENU -----------------------
@@ -101,7 +105,7 @@ public:
 	}
 
 	//------------------ INICIO/MENU -----------------------
-	void drawEverythingNivle1(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador) {
+	void drawEverythingNivle1(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpmensaje, bool i) {
 		/*for (int i = 0; i < casasNivel1.size(); i++)	{
 			casasNivel1.at(i)->draw(g);
 		}*/
@@ -118,20 +122,48 @@ public:
 		/*g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getViewRectangle());*/
 
 		mainCharacter->draw(g, bmpMainCharacter);
+
+		if (i) {
+			mensaje->draw(g, bmpmensaje);
+		}
+		
 	}
 
-	void colisionNivel1() {
-		for (int i = 0; i < cazadores.size(); i++)
-		{
+	bool colisionNivel1(Graphics^ g, Bitmap^ bmpmensaje) {
+		for (int i = 0; i < cazadores.size(); i++) {
 			if (cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
 				cazadores.at(i)->setVisible(false);
+				mensaje = new Mensaje(g, 255, 44);
+				pokemonIcons.push_back(new PokemonIcon(g, 30, 30, pokemonIcons.size()));
 			}
 		}
+		for (int i = 0; i < cazadores.size(); i++) {
+			if (!cazadores.at(i)->getVisible()) {
+				cazadores.erase(cazadores.begin() + i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	MainCharacter* getMainCharacter() { return mainCharacter; }
+	Mensaje* getMensaje() { return mensaje; }
 
 	vector<ObstaculosCasa*> getObstaculosCasa() { return casasMenu; }
 	vector<ObstaculosCasa*> getObstaculosNivel1() { return casasNivel1; }
+
+	void drawPokemonIcon(Graphics^ g, Bitmap^ bmp1, Bitmap^ bmp2, Bitmap^ bmp3, Bitmap^ bmp4, Bitmap^ bmp5) {
+		for (int i = 0; i < pokemonIcons.size(); i++) {
+			switch (i)
+			{
+			case 0: pokemonIcons.at(i)->draw(g, bmp1); break;
+			case 1: pokemonIcons.at(i)->draw(g, bmp2); break;
+			case 2: pokemonIcons.at(i)->draw(g, bmp3); break;
+			case 3: pokemonIcons.at(i)->draw(g, bmp4); break;
+			case 4: pokemonIcons.at(i)->draw(g, bmp5); break;
+			}
+			pokemonIcons.at(i)->move(g);
+		}
+	}
 
 };

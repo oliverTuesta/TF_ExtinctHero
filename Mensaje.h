@@ -4,43 +4,26 @@
 using namespace System::Drawing;
 
 class Mensaje {
-private:
-	int x, y, dy; //solo se movera hacia arriba y hacia abajo
+protected:
+	int x, y; //solo se movera hacia arriba y hacia abajo
 	int width, height;
 	float zoomW, zoomH;
-	bool moving;
 
 public:
-	Mensaje(Graphics^ g, Bitmap^ bmp, float zW = 1.0, float zH = 1.0) {
-		dy = -5;
-		width = bmp->Width;
-		height = bmp->Height;
+	Mensaje(Graphics^ g, int w, int h, float zW = 1.0, float zH = 1.0) {
+		width = w;
+		height = h;
 		zoomW = zW;
 		zoomH = zH;
-		moving = true;
-		x = (g->VisibleClipBounds.Width / 2) - (width * zoomW / 2);
-		y = g->VisibleClipBounds.Height;
+		x = g->VisibleClipBounds.Width - width * 1.4;
+		y = 0;
 	}
 
 	~Mensaje() {}
 
-	void draw(Graphics^ g, Bitmap^ bmp = gcnew Bitmap("archivos/mensajePositivo")) {
-		Rectangle sectionShown = Rectangle(width, height, width, height);
+	void draw(Graphics^ g, Bitmap^ bmp) {
 		Rectangle zoom = Rectangle(x, y, width * zoomW, height * zoomH);
-		g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);
+		g->DrawImage(bmp, zoom);
 	}
-
-	void move(Graphics^ g) {
-		if (moving) {
-			y += dy;
-		}
-		if (y + height + 10 < g->VisibleClipBounds.Height) {
-			moving = false;
-			dy = abs(dy);
-		}
-	}
-
-	bool getMoving() { return moving; }
-	void setMoving(bool i) { moving = i; }
 
 };
