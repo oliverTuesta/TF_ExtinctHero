@@ -76,7 +76,7 @@ namespace TFExtinctHero {
 		Graphics^ g;
 		BufferedGraphicsContext^ space;
 		BufferedGraphics^ buffer;
-		
+
 		//Fondo Menu
 		Bitmap^ bmpFondoMenu;
 		Bitmap^ bmpTituloMenu;
@@ -103,7 +103,7 @@ namespace TFExtinctHero {
 		bool teclaA, teclaD, teclaW, teclaS;
 
 		//Pokemons
-		Bitmap^ bmpWartortleIcon; 
+		Bitmap^ bmpWartortleIcon;
 		Bitmap^ bmpWartortle;
 		Bitmap^ bmpBulbasaurIcon;
 		Bitmap^ bmpBulbasaur;
@@ -118,7 +118,7 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Timer^ tmrInicio;
 	private: System::Windows::Forms::Timer^ tmrNivel1;
 	private: System::Windows::Forms::Timer^ tmrMensaje;
-private: System::Windows::Forms::Timer^ tmrTiempo;
+	private: System::Windows::Forms::Timer^ tmrTiempo;
 
 	private: System::Windows::Forms::Panel^ panel1;
 
@@ -180,9 +180,9 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			// panel1
 			// 
 			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->panel1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1184, 754);
+			this->panel1->Size = System::Drawing::Size(888, 613);
 			this->panel1->TabIndex = 0;
 			// 
 			// tmrInicio
@@ -205,12 +205,12 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 			// 
 			// form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1181, 753);
+			this->ClientSize = System::Drawing::Size(886, 612);
 			this->Controls->Add(this->panel1);
-			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
@@ -233,148 +233,147 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 		//tmrMenu->Enabled = false;							   //
 		//tmrNivel1->Enabled = true;							   //
 	}
-	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
-		//Clear
-		buffer->Graphics->Clear(Color::White);
-		//Move & Draw
-		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
-		buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
-		buffer->Graphics->DrawImage(bmpTituloMenu, 213, 100, 473, 89);
-		buffer->Graphics->DrawImage(bmpPLAYMenu, 335, 250, 230, 83);
-		buffer->Graphics->DrawImage(bmpENTERMenu, 324, 360, 252, 25);
-		/*MessageBox::Show(panel1->Width);*/
-		//Render
-		buffer->Render(g);
-		fondoMenuX += 5;
-		if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
-	}
-	Void tmrInicio_Tick(Object^ sender, EventArgs^ e) {
-		//Clear
-		buffer->Graphics->Clear(Color::White);
-		//Move & Draw
-		if (juego->colisionMenu() == 1) {
-			teclaA = false;
-			teclaD = false;
-			teclaW = false;
-			teclaS = false;
-			formInstrucciones->Show();
-		}
-		else if (juego->colisionMenu() == 2) {
-			this->Width = 800;
-			this->Height = 800;
-			panel1->Width = 790;
-			panel1->Height = 760;
-			buffer = space->Allocate(g, panel1->ClientRectangle);
-			CenterToScreen();
-			juego->getMainCharacter()->setNivel1();
-			juego->changetoNivel1();
-			tmrInicio->Enabled = false;
-			tmrNivel1->Enabled = true;
-		}
-		buffer->Graphics->DrawImage(bmpFondoInicio, 0, 0, panel1->Width, panel1->Height);
-		juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
-		//Render
-		buffer->Render(g);
-		mover();
-	}
-	Void tmrNivel1_Tick(Object^ sender, EventArgs^ e) {
-		//Clear
-		buffer->Graphics->Clear(Color::White);
-		//Move & Draw
-		buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
-		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
-		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
-		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
-		//Render
-		buffer->Render(g);
-		mover();
-	}
-	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
-		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
-			tmrMenu->Enabled = false;
-			tmrInicio->Enabled = true;
-			
-			this->Width = 500;
-			this->Height = 500;
-			panel1->Width = 490;
-			panel1->Height = 470;
-			buffer = space->Allocate(g, panel1->ClientRectangle);
-			CenterToScreen();
-			
-		}
-		
-		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
-			teclaA = true;
-		}
-		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
-			teclaD = true;
-		}
-		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
-			teclaW = true;
-		}
-		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
-			teclaS = true;
-		}
-		if (e->KeyCode == Keys::Space) {
-			if (juego->colisionNivel1(g, bmpMensaje)) {
-				tmrMensaje->Enabled = true;
-			}
-		}
-		
-	}
-	Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {
-		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
-			teclaA = false;
-		}
-		if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
-			teclaD = false;
-		}
-		if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
-			teclaW = false;
-		}
-		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
-			teclaS = false;
-		}
-	}
-	void mover() {
-		if (tmrInicio->Enabled) {
-			if (teclaA) {
-				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosCasa());
-			}
-			if (teclaD) {
-				juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosCasa());
-			}
-			if (teclaW) {
-				juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosCasa());
-			}
-			if (teclaS) {
-				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosCasa());
-			}
-		}
-		if (tmrNivel1->Enabled) {
-			if (teclaA) {
-				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel1());
-			}
-			if (teclaD) {
-				juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosNivel1());
-			}
-			if (teclaW) {
-				juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosNivel1());
-			}
-			if (teclaS) {
-				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
-			}
-		}
-	}
-	Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {
-		tmrMensaje->Enabled = false;
-	}
-	Void tmrTiempo_Tick(System::Object^ sender, System::EventArgs^ e) {
+		   Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
+			   //Clear
+			   buffer->Graphics->Clear(Color::White);
+			   //Move & Draw
+			   buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX, fondoMenuY, panel1->Width * 3, panel1->Height);
+			   buffer->Graphics->DrawImage(bmpFondoMenu, fondoMenuX - panel1->Width * 3 + 1, fondoMenuY, panel1->Width * 3, panel1->Height);
+			   buffer->Graphics->DrawImage(bmpTituloMenu, 213, 100, 473, 89);
+			   buffer->Graphics->DrawImage(bmpPLAYMenu, 335, 250, 230, 83);
+			   buffer->Graphics->DrawImage(bmpENTERMenu, 324, 360, 252, 25);
+			   /*MessageBox::Show(panel1->Width);*/
+			   //Render
+			   buffer->Render(g);
+			   fondoMenuX += 5;
+			   if (fondoMenuX > panel1->Width * 3)fondoMenuX = 0;
+		   }
+		   Void tmrInicio_Tick(Object^ sender, EventArgs^ e) {
+			   //Clear
+			   buffer->Graphics->Clear(Color::White);
+			   //Move & Draw
+			   if (juego->colisionMenu() == 1) {
+				   teclaA = false;
+				   teclaD = false;
+				   teclaW = false;
+				   teclaS = false;
+				   formInstrucciones->Show();
+			   }
+			   else if (juego->colisionMenu() == 2) {
+				   this->Width = 800;
+				   this->Height = 800;
+				   panel1->Width = 790;
+				   panel1->Height = 760;
+				   buffer = space->Allocate(g, panel1->ClientRectangle);
+				   CenterToScreen();
+				   juego->getMainCharacter()->setNivel1();
+				   juego->changetoNivel1();
+				   tmrInicio->Enabled = false;
+				   tmrNivel1->Enabled = true;
+			   }
+			   buffer->Graphics->DrawImage(bmpFondoInicio, 0, 0, panel1->Width, panel1->Height);
+			   juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
+			   //Render
+			   buffer->Render(g);
+			   mover();
+		   }
+		   Void tmrNivel1_Tick(Object^ sender, EventArgs^ e) {
+			   //Clear
+			   buffer->Graphics->Clear(Color::White);
+			   //Move & Draw
+			   buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
+			   juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
+			   juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
+			   juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
+			   //Render
+			   buffer->Render(g);
+			   mover();
+		   }
+		   Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
+			   if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
+				   tmrMenu->Enabled = false;
+				   tmrInicio->Enabled = true;
 
+				   this->Width = 500;
+				   this->Height = 500;
+				   panel1->Width = 490;
+				   panel1->Height = 470;
+				   buffer = space->Allocate(g, panel1->ClientRectangle);
+				   CenterToScreen();
+
+			   }
+
+			   if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+				   teclaA = true;
+			   }
+			   if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+				   teclaD = true;
+			   }
+			   if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+				   teclaW = true;
+			   }
+			   if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+				   teclaS = true;
+			   }
+			   if (e->KeyCode == Keys::Space) {
+				   if (juego->colisionNivel1(g, bmpMensaje)) {
+					   tmrMensaje->Enabled = true;
+				   }
+			   }
+
+		   }
+		   Void form1_KeyUp(Object^ sender, KeyEventArgs^ e) {
+			   if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+				   teclaA = false;
+			   }
+			   if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+				   teclaD = false;
+			   }
+			   if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+				   teclaW = false;
+			   }
+			   if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+				   teclaS = false;
+			   }
+		   }
+		   void mover() {
+			   if (tmrInicio->Enabled) {
+				   if (teclaA) {
+					   juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosCasa());
+				   }
+				   if (teclaD) {
+					   juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosCasa());
+				   }
+				   if (teclaW) {
+					   juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosCasa());
+				   }
+				   if (teclaS) {
+					   juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosCasa());
+				   }
+			   }
+			   if (tmrNivel1->Enabled) {
+				   if (teclaA) {
+					   juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel1());
+				   }
+				   if (teclaD) {
+					   juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosNivel1());
+				   }
+				   if (teclaW) {
+					   juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosNivel1());
+				   }
+				   if (teclaS) {
+					   juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
+				   }
+			   }
+		   }
+		   Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {
+			   tmrMensaje->Enabled = false;
+		   }
+		   Void tmrTiempo_Tick(System::Object^ sender, System::EventArgs^ e) {
+
+		   }
+
+	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
-		}
-	}
-private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-}
-};
+	};
 }
