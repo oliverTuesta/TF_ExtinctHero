@@ -222,16 +222,16 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 		}
 #pragma endregion
 	private: Void form1_Load(Object^ sender, EventArgs^ e) {
-		this->Width = 800;									   //
-		this->Height = 800;									   //
-		panel1->Width = 790;								   //
-		panel1->Height = 760;								   // Aqui se modifica
-		buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
-		CenterToScreen();									   // el inicio o en el
-		juego->getMainCharacter()->setNivel1();				   // nivel 1
-		tmrInicio->Enabled = false;							   //
-		tmrMenu->Enabled = false;							   //
-		tmrNivel1->Enabled = true;							   //
+		//this->Width = 800;									   //
+		//this->Height = 800;									   //
+		//panel1->Width = 790;								   //
+		//panel1->Height = 760;								   // Aqui se modifica
+		//buffer = space->Allocate(g, panel1->ClientRectangle);  // para empezar en
+		//CenterToScreen();									   // el inicio o en el
+		//juego->getMainCharacter()->setNivel1();				   // nivel 1
+		//tmrInicio->Enabled = false;							   //
+		//tmrMenu->Enabled = false;							   //
+		//tmrNivel1->Enabled = true;							   //
 	}
 	Void tmrMenu_Tick(Object^ sender, EventArgs^ e) {
 		//Clear
@@ -372,5 +372,9 @@ private: System::Windows::Forms::Timer^ tmrTiempo;
 	Void tmrTiempo_Tick(System::Object^ sender, System::EventArgs^ e) {
 
 	}
+		}
+	}
+private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
+}
 };
 }
