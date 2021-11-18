@@ -68,6 +68,7 @@ namespace TFExtinctHero {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(282, 253);
 			this->Controls->Add(this->textBox1);
+			this->Enabled = false;
 			this->Name = L"MensajeDelAdmin";
 			this->Text = L"MensajeDelAdmin";
 			this->Load += gcnew System::EventHandler(this, &MensajeDelAdmin::MensajeDelAdmin_Load);
