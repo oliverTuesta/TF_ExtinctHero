@@ -128,12 +128,14 @@
     <ClInclude Include="Cazador.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="File.h" />
     <ClInclude Include="form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FormInstrucciones.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Player.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="Mensaje.h" />
     <ClInclude Include="MensajeDelAdmin.h">
