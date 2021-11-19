@@ -128,6 +128,7 @@
     <ClInclude Include="Cazador.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Criminales.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="form1.h">
       <FileType>CppForm</FileType>

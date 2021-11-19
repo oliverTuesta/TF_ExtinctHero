@@ -4,6 +4,7 @@
 #include "Cazador.h"
 #include "PokemonIcons.h"
 #include "Pokemon.h"
+#include "Criminales.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -20,13 +21,14 @@ private:
 	OldMan* oldman;
 	Mensaje* mensaje;
 	vector<Cazador*>cazadores;
+	vector<Criminales*>criminales;
 	vector<Pokemon*>pokemones;
 	vector<PokemonIcon*>pokemonIcons;
 	vector<ObstaculosCasa*>casasMenu;
 	vector<ObstaculosCasa*>casasNivel1;
 
 public:
-	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpmensaje) {
+	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje) {
 		//---------- Constructor del Menu/Inicio ----------
 		mainCharacter = new MainCharacter(bmpMainCharacter);
 		oldman = new OldMan(bmpOldMan);
@@ -61,6 +63,7 @@ public:
 
 		for (int i = 0; i < 4; i++) {
 			cazadores.push_back(new Cazador(bmpCazador));
+			criminales.push_back(new Criminales(bmpCriminal,cazadores.at(i)));
 		}
 	}
 
@@ -107,7 +110,7 @@ public:
 	}
 
 	//------------------ INICIO/MENU -----------------------
-	void drawEverythingNivle1(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpmensaje, bool i) {
+	void drawEverythingNivle1(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje, bool i) {
 		/*for (int i = 0; i < casasNivel1.size(); i++)	{
 			casasNivel1.at(i)->draw(g);
 		}*/
@@ -117,12 +120,20 @@ public:
 		for (int i = 0; i < cazadores.size(); i++) {
 			cazadores.at(i)->draw(g, bmpCazador);
 		}
+		for (int i = 0; i < criminales.size(); i++)
+		{
+			criminales.at(i)->move(g, this->getMainCharacter());
+		}
+		for (int i = 0; i < criminales.size(); i++)
+		{
+			criminales.at(i)->draw(g, bmpCriminal);
+		}
 		g->DrawEllipse(gcnew Pen(Color::DodgerBlue, 3), 
 			this->getMainCharacter()->getX()-60, 
 			this->getMainCharacter()->getY()-60, 150, 150);
 
 
-		/*g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getViewRectangle());*/
+		g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getDetectionRectangle());
 
 		mainCharacter->draw(g, bmpMainCharacter);
 

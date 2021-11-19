@@ -152,5 +152,7 @@ public:
 	Rectangle getViewRectangle() {
 		return Rectangle(x + dx - 50, y + dy - 50, width * zoomW + 90, height * zoomH + 90);
 	}
-
+	Rectangle getDetectionRectangle() {
+		return Rectangle(x + dx - 100, y + dy - 100, width * zoomW + 190, height * zoomH + 190);
+	}
 };

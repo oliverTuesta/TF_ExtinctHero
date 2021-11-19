@@ -56,9 +56,12 @@ namespace TFExtinctHero {
 			tiempoNivel1 = 60;
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
+			//Nivel 2
+			bmpCriminal = gcnew Bitmap("archivos/personajes/SSJ.png");
+
 			//Controller
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
-			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador, bmpMensaje);
+			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador, bmpCriminal, bmpMensaje);
 			teclaA = teclaD = teclaW = teclaS = false;
 
 			//Pokemon
@@ -99,6 +102,9 @@ namespace TFExtinctHero {
 		Bitmap^ bmpCazador;
 		MensajeDelAdmin^ mensajedelAdmin;
 		int tiempoNivel1;
+
+		//Nivel 2
+		Bitmap^ bmpCriminal;
 
 		//Personaje
 		Bitmap^ bmpPersonajePrincipal;
@@ -310,7 +316,7 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 		buffer->Graphics->Clear(Color::White);
 		//Move & Draw
 		buffer->Graphics->DrawImage(bmpFondoNivel1, 0, 0, panel1->Width, panel1->Height);
-		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpMensaje, tmrMensaje->Enabled);
+		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpCriminal, bmpMensaje, tmrMensaje->Enabled);
 		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
 		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
 		label1->Text = "Tiempo Restante: " + tiempoNivel1;
