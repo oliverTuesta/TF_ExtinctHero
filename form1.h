@@ -2,6 +2,7 @@
 #include "Controller.h"
 #include "FormInstrucciones.h"
 #include "MensajeDelAdmin.h"
+#include "File.h"
 
 namespace TFExtinctHero {
 
@@ -119,6 +120,13 @@ namespace TFExtinctHero {
 		Bitmap^ bmpSnorlax;
 		Bitmap^ bmpPsyduckIcon;
 		Bitmap^ bmpPsyduck;
+
+		//Leaderboard
+		File* file;
+		Player* usuario;
+		//string nombreUsuario;
+		int pokemonRescuedUsuario;
+		int timeUsuario;
 
 
 	private: System::Windows::Forms::Timer^ tmrInicio;

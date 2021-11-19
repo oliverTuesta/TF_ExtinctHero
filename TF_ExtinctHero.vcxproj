@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="form1.cpp" />
     <ClCompile Include="FormInstrucciones.cpp" />
+    <ClCompile Include="IngresaNombre.cpp" />
     <ClCompile Include="MensajeDelAdmin.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="FormInstrucciones.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="IngresaNombre.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Player.h" />
@@ -152,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormInstrucciones.resx">
       <DependentUpon>FormInstrucciones.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IngresaNombre.resx">
+      <DependentUpon>IngresaNombre.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MensajeDelAdmin.resx">
       <DependentUpon>MensajeDelAdmin.h</DependentUpon>

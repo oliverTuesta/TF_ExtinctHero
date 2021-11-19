@@ -15,11 +15,13 @@ private:
 	string text;
 
 	//Lista de variables
-	bool firstTime; //Ya habia jugado antes_como para mostrar o no el menu
+	bool firstTime; //Ya habia jugado antes_como para mostrar o no el menu // 0 significa que aun no juega
 	int playersPlayed; //Numero de jugadores que han jugado
+	int aux;
+	string name;
+	int pokemonRescued;
+	int time;
 	vector<Player*>players;
-	/*int hp;
-	int myTime;*/
 
 public:
 	File() {}
@@ -32,23 +34,48 @@ public:
 			fileRead.close();
 
 			fileWrite.open("configuration.txt", ios::out); //Creates the new txt
-			fileWrite << "10" << endl;
-			fileWrite << "90" << endl;
+			fileWrite << "0" << endl;
+			fileWrite << "0" << endl; //numero de jugadores anteriores
 			fileWrite.close();
 
 			fileRead.open("configuration.txt", ios::in);
 		}
 
+		//Ya habia jugado?
 		getline(fileRead, text);
-		hp = atoi(text.c_str());
+		aux = atoi(text.c_str());
+		if (aux == 0) { firstTime = true; }
+		else { firstTime = false; }
+		//Cuantos jugadores hay
 		getline(fileRead, text);
-		myTime = atoi(text.c_str());
+		playersPlayed = atoi(text.c_str());
+		for (int i = 0; i < playersPlayed; i++) {
+			getline(fileRead, text);
+			name = text.c_str();
+			getline(fileRead, text);
+			pokemonRescued = atoi(text.c_str());
+			getline(fileRead, text);
+			time = atoi(text.c_str());
+			players.push_back(new Player(name, pokemonRescued, time));
+		}
 
 		fileRead.close();
 	}
 
-	int getHp() { return hp; }
-	int getMyTime() { return myTime; }
-	
+	void agregarJugador(Player* newPlayer) {
+		players.push_back(newPlayer);
+		fileWrite.open("configuration.txt", ios::out);
+		fileWrite << "1" << endl;
+		fileWrite << players.size() << endl;
+		for (int i = 0; i < players.size(); i++) {
+			fileWrite << players.at(i)->getName() << endl;
+			fileWrite << players.at(i)->getPokemonRescued() << endl;
+			fileWrite << players.at(i)->getTime() << endl;
+		}
+		fileWrite.close();
+		playersPlayed = players.size();
+	}
+
+	vector<Player*> getPlayers() { return players; }
 
 };
