@@ -74,5 +74,8 @@
     <ClInclude Include="IngresaNombre.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Criminales.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
