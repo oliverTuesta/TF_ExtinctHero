@@ -191,6 +191,7 @@ public:
 				}
 				mensaje = new Mensaje(g, 255, 44);
 				pokemonIcons.push_back(new PokemonIcon(0, g, 30, 30, pokemonIcons.size()));
+				break;
 			}
 		}
 		for (int i = 0; i < cazadores.size(); i++) {
@@ -256,9 +257,9 @@ public:
 			potenciadores.at(i)->move();
 		}
 
-		for (int i = 0; i < casasNivel2.size(); i++)	{
+		/*for (int i = 0; i < casasNivel2.size(); i++)	{
 			casasNivel2.at(i)->draw(g);
-		}
+		}*/
 
 	}
 
@@ -312,6 +313,13 @@ public:
 				pokemonIcons.at(pokemonIcons.size() - 1)->setNivel(850);
 				pokemonIcons.at(pokemonIcons.size() - 1)->setX(900);
 				break;
+			}
+		}
+
+		for (int i = 0; i < criminales.size(); i++)
+		{
+			if (mainCharacter->getCaptureRectangle().IntersectsWith(criminales[i]->getRectangle())) {
+				return 3;
 			}
 		}
 
@@ -377,5 +385,16 @@ public:
 
 	bool getSpaceBar() { return pressingSpaceBar; }
 	void setSpaceBar(bool i) { pressingSpaceBar = i; }
+
+	void setMenuAgain() {
+		casasMenu.push_back(new ObstaculosCasa(205, 80, 75, 60));
+		casasMenu.push_back(new ObstaculosCasa(355, 60, 75, 60));
+		casasMenu.push_back(new ObstaculosCasa(60, 260, 125, 80));
+		casasMenu.push_back(new ObstaculosCasa(280, 285, 175, 60));
+		cazadores.clear();
+		criminales.clear();
+		pokemones.clear();
+		pokemonIcons.clear();
+	}
 
 };

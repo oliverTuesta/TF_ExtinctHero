@@ -20,6 +20,15 @@ public:
 		finishLvl1 = false;
 	}
 
+	void setMenu() {
+		x = 220;
+		y = 200;
+		dx = dy = 10;
+		zoomW = zoomH = 0.8;
+		movement = true;
+		finishLvl1 = false;
+	}
+
 	~MainCharacter() {}
 
 	void moveLeft(Graphics^ g, vector<ObstaculosCasa*> casas) {

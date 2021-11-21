@@ -54,7 +54,7 @@ namespace TFExtinctHero {
 			//Nivel 1
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
-			tiempoNivel1 = 2;//////////////////////////////////////////////////////////////////
+			tiempoNivel1 = 60;//////////////////////////////////////////////////////////////////
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Nivel 2
@@ -391,7 +391,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			frLeaderboard->Show();
 			tmrNivel1->Enabled = false;
 		}
-		if (juego->getPokemonSize() == 0 && juego->colisionNivel1Terminado()) {
+		if (juego->getPokemonSize() == 4 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
 			tmrNivel2->Enabled = true;
 			this->Width = 900;
@@ -425,6 +425,17 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		case 2:
 			tmrMensaje->Enabled = true;
 			break;
+		case 3:
+			timeUsuario += 90 - tiempoNivel1;
+			usuario->setPokemonRescued(juego->getPokemonSize());
+			usuario->setTime(timeUsuario);
+			file->agregarJugador(usuario);
+			file->orderPlayers();
+			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, juego->getPokemonSize(), false);
+			frLeaderboard->setLeaderBoardNames(file->getPlayers());
+			frLeaderboard->Show();
+			tmrNivel2->Enabled = false;
+			break;
 		}
 		if (juego->getPokemonSize() == 5) {
 			timeUsuario += 90 - tiempoNivel1;
@@ -436,6 +447,24 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel2->Enabled = false;
+
+			this->Width = 900;
+			this->Height = 600;
+			panel1->Width = 900;
+			panel1->Height = 600;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			textBox1->Enabled = true;
+			textBox1->Visible = true;
+			label2->Visible = true;
+			label1->Visible = false;
+			tmrMenu->Enabled = true;
+			tiempoNivel1 = 60;
+			tmrSegundo->Enabled = false;
+			teclaA = teclaD = teclaS = teclaW = false;
+			juego->getMainCharacter()->setMenu();
+			juego->setMenuAgain();
+
 		}
 		
 		//Render
