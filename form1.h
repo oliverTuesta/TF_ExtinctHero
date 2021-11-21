@@ -58,7 +58,9 @@ namespace TFExtinctHero {
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Nivel 2
+			bmpFondoNivel2 = gcnew Bitmap("archivos/Nivel2.png");
 			bmpCriminal = gcnew Bitmap("archivos/personajes/SSJ.png");
+			bmpPotenciador = gcnew Bitmap("archivos/potenciadores.png");
 
 			//Controller
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
@@ -105,7 +107,9 @@ namespace TFExtinctHero {
 		int tiempoNivel1;
 
 		//Nivel 2
+		Bitmap^ bmpFondoNivel2;
 		Bitmap^ bmpCriminal;
+		Bitmap^ bmpPotenciador;
 
 		//Personaje
 		Bitmap^ bmpPersonajePrincipal;
@@ -138,8 +142,9 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Timer^ tmrInicio;
 	private: System::Windows::Forms::Timer^ tmrNivel1;
 	private: System::Windows::Forms::Timer^ tmrMensaje;
-private: System::Windows::Forms::Label^ label1;
-private: System::Windows::Forms::Timer^ tmrSegundo;
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Timer^ tmrSegundo;
+private: System::Windows::Forms::Timer^ tmrNivel2;
 
 
 	private: System::Windows::Forms::Panel^ panel1;
@@ -192,6 +197,7 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrMensaje = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrSegundo = (gcnew System::Windows::Forms::Timer(this->components));
+			this->tmrNivel2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -219,7 +225,7 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 			this->label1->ForeColor = System::Drawing::Color::White;
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(205, 25);
+			this->label1->Size = System::Drawing::Size(164, 20);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Tiempo Restante: 60";
 			// 
@@ -240,6 +246,10 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 			// 
 			this->tmrSegundo->Interval = 1000;
 			this->tmrSegundo->Tick += gcnew System::EventHandler(this, &form1::tmrSegundo_Tick);
+			// 
+			// tmrNivel2
+			// 
+			this->tmrNivel2->Tick += gcnew System::EventHandler(this, &form1::tmrNivel2_Tick);
 			// 
 			// form1
 			// 
@@ -327,15 +337,33 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 		juego->drawEverythingNivle1(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpCriminal, bmpMensaje, tmrMensaje->Enabled);
 		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
 		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
-		label1->Text = "Tiempo Restante: " + tiempoNivel1;
+		label1->Text = " Tiempo Restante: " + tiempoNivel1 + "  ";
 		//Render
 		buffer->Render(g);
 		mover();
-		if (juego->getPokemonSize() == 4) {
-			mensajedelAdmin->Show();
+		if (juego->getPokemonSize() == 4 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
+			tmrNivel2->Enabled = true;
+			this->Width = 900;
+			this->Height = 800;
+			panel1->Width = 885;
+			panel1->Height = 760;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			juego->changetoNivel2(bmpCazador, bmpCriminal);
 		}
 
+	}
+	Void tmrNivel2_Tick(Object^ sender, EventArgs^ e) {
+		//Clear
+		buffer->Graphics->Clear(Color::White);
+		//Move & Draw
+		buffer->Graphics->DrawImage(bmpFondoNivel2, 0, 0, panel1->Width, panel1->Height);
+		juego->drawEverythingNivle2(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpCriminal, bmpMensaje, tmrMensaje->Enabled);
+		mover();
+
+		//Render
+		buffer->Render(g);
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
@@ -399,7 +427,7 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosCasa());
 			}
 		}
-		if (tmrNivel1->Enabled) {
+		if (tmrNivel1->Enabled || tmrNivel2->Enabled) {
 			if (teclaA) {
 				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel1());
 			}
@@ -420,5 +448,5 @@ private: System::Windows::Forms::Timer^ tmrSegundo;
 	Void tmrSegundo_Tick(Object^ sender, EventArgs^ e) {
 		tiempoNivel1--;
 	}
-};
+	};
 }

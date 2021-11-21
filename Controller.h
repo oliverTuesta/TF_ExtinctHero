@@ -61,9 +61,8 @@ public:
 		casasNivel1.push_back(new ObstaculosCasa(360, 505, 70, 55));
 		casasNivel1.push_back(new ObstaculosCasa(470, 505, 60, 55));
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) { 
 			cazadores.push_back(new Cazador(bmpCazador));
-			criminales.push_back(new Criminales(bmpCriminal,cazadores.at(i)));
 		}
 	}
 
@@ -74,6 +73,8 @@ public:
 	}
 
 	//------------------ INICIO/MENU -----------------------
+	////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	void drawEverythingMenu(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan) {
 		/*for (int i = 0; i < casasMenu.size(); i++)	{
 			casasMenu.at(i)->draw(g);
@@ -109,11 +110,83 @@ public:
 		casasMenu.clear();
 	}
 
-	//------------------ INICIO/MENU -----------------------
+	//-------------------- NIVEL 1 -------------------------
+	////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
 	void drawEverythingNivle1(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje, bool i) {
-		/*for (int i = 0; i < casasNivel1.size(); i++)	{
-			casasNivel1.at(i)->draw(g);
-		}*/
+		for (int i = 0; i < cazadores.size(); i++) {
+			cazadores.at(i)->move(g, this->getMainCharacter());
+		}
+		for (int i = 0; i < cazadores.size(); i++) {
+			cazadores.at(i)->draw(g, bmpCazador);
+		}
+		g->DrawEllipse(gcnew Pen(Color::DodgerBlue, 3), 
+			this->getMainCharacter()->getX()-60, 
+			this->getMainCharacter()->getY()-60, 150, 150);
+		mainCharacter->draw(g, bmpMainCharacter);
+
+		if (i) {
+			mensaje->draw(g, bmpmensaje);
+		}
+		
+		if (mainCharacter->getFinsishLvl1()) {
+			g->DrawString("Continue ->",
+				gcnew Drawing::Font("MV Boli", 10, FontStyle::Bold),
+				Brushes::Black, 690, 535);
+		}
+
+		//g->DrawRectangle(gcnew Pen(Color::Red, 3), Rectangle(700, 530, 70, 30));
+	}
+
+	bool colisionNivel1(Graphics^ g, Bitmap^ bmpmensaje) {
+		for (int i = 0; i < cazadores.size(); i++) {
+			if (cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
+				cazadores.at(i)->setVisible(false);
+				switch (pokemones.size())
+				{
+				case 0: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5)); break;
+				case 2: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 3: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5, 1));
+					mainCharacter->setFinsishLvl1(true);
+					break;
+				}
+				mensaje = new Mensaje(g, 255, 44);
+				pokemonIcons.push_back(new PokemonIcon(g, 30, 30, pokemonIcons.size()));
+			}
+		}
+		for (int i = 0; i < cazadores.size(); i++) {
+			if (!cazadores.at(i)->getVisible()) {
+				cazadores.erase(cazadores.begin() + i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool colisionNivel1Terminado() {
+		if (mainCharacter->getRectangle().IntersectsWith(Rectangle(700, 530, 70, 30))) {
+			return true;
+		}
+		return false;
+	}
+
+	void changetoNivel2(Bitmap^ bmpCazador, Bitmap^ bmpCriminal) {
+		casasNivel1.clear();
+		cazadores.clear();
+		pokemones.clear();
+		criminales.clear();
+		for (int i = 0; i < 4; i++) {
+			cazadores.push_back(new Cazador(bmpCazador));
+			criminales.push_back(new Criminales(bmpCriminal, cazadores.at(i)));
+		}
+		mainCharacter->setNivel2();
+	}
+
+	//-------------------- Nivel 2 -------------------------
+	////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////
+	void drawEverythingNivle2(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje, bool i) {
 		for (int i = 0; i < cazadores.size(); i++) {
 			cazadores.at(i)->move(g, this->getMainCharacter());
 		}
@@ -128,44 +201,20 @@ public:
 		{
 			criminales.at(i)->draw(g, bmpCriminal);
 		}
-		g->DrawEllipse(gcnew Pen(Color::DodgerBlue, 3), 
-			this->getMainCharacter()->getX()-60, 
-			this->getMainCharacter()->getY()-60, 150, 150);
-
-
-		g->DrawRectangle(gcnew Pen(Color::Red, 3), mainCharacter->getDetectionRectangle());
-
+		g->DrawEllipse(gcnew Pen(Color::DodgerBlue, 3),
+			this->getMainCharacter()->getX() - 60,
+			this->getMainCharacter()->getY() - 60, 150, 150);
 		mainCharacter->draw(g, bmpMainCharacter);
 
 		if (i) {
 			mensaje->draw(g, bmpmensaje);
 		}
-		
 	}
 
-	bool colisionNivel1(Graphics^ g, Bitmap^ bmpmensaje) {
-		for (int i = 0; i < cazadores.size(); i++) {
-			if (cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
-				cazadores.at(i)->setVisible(false);
-				switch (pokemones.size())
-				{
-				case 0: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
-				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5)); break;
-				case 2: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
-				case 3: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5, 1)); break;
-				}
-				mensaje = new Mensaje(g, 255, 44);
-				pokemonIcons.push_back(new PokemonIcon(g, 30, 30, pokemonIcons.size()));
-			}
-		}
-		for (int i = 0; i < cazadores.size(); i++) {
-			if (!cazadores.at(i)->getVisible()) {
-				cazadores.erase(cazadores.begin() + i);
-				return true;
-			}
-		}
-		return false;
+	void colisionNivel2(Graphics^ g) {
+
 	}
+
 
 	MainCharacter* getMainCharacter() { return mainCharacter; }
 	Mensaje* getMensaje() { return mensaje; }

@@ -83,6 +83,8 @@ public:
 			x += dx;
 			y += dy;
 		}
+		idx++;
+		if (idx > 3)idx = 0;
 	}
 
 	~Criminales();

@@ -106,5 +106,6 @@ namespace TFExtinctHero {
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		/*textBox1->Text*/
 	}
+
 	};
 }
