@@ -580,14 +580,18 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 	
 	private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true && usuario->getTime() != -1) {
-		textBox1->Enabled = false;
-		textBox1->Visible = false;
 		label2->Visible = false;
 		
 		tmrMenu->Enabled = false;
 		tmrInicio->Enabled = true;
-		string nombrePlayer;
+		string nombrePlayer /*= textBox1->Text*/;
 		usuario->setTime(-1);
+		if (nombrePlayer == "")
+			usuario->setName("Anonimus");
+		else usuario->setName(nombrePlayer);
+
+		textBox1->Enabled = false;
+		textBox1->Visible = false;
 
 		this->Width = 500;
 		this->Height = 500;
