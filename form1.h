@@ -66,6 +66,7 @@ namespace TFExtinctHero {
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
 			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador, bmpCriminal, bmpMensaje);
 			teclaA = teclaD = teclaW = teclaS = false;
+			usuario = new Player("Google", 0, 0);
 
 			//Pokemon
 			bmpWartortleIcon = gcnew Bitmap("archivos/icons/wartortleIcon.png");
@@ -238,6 +239,7 @@ private: System::Windows::Forms::TextBox^ textBox1;
 			this->textBox1->Size = System::Drawing::Size(165, 20);
 			this->textBox1->TabIndex = 1;
 			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->textBox1->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &form1::textBox1_KeyDown);
 			// 
 			// label1
 			// 
@@ -474,5 +476,44 @@ private: System::Windows::Forms::TextBox^ textBox1;
 		tiempoNivel1--;
 	}
 	
+private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true && usuario->getTime() != -1) {
+		textBox1->Enabled = false;
+		textBox1->Visible = false;
+		label2->Visible = false;
+		
+		tmrMenu->Enabled = false;
+		tmrInicio->Enabled = true;
+		string nombrePlayer;
+		usuario->setTime(-1);
+
+		this->Width = 500;
+		this->Height = 500;
+		panel1->Width = 490;
+		panel1->Height = 470;
+		buffer = space->Allocate(g, panel1->ClientRectangle);
+		CenterToScreen();
+		
+
+	}
+
+	//if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
+	//	teclaA = true;
+	//}
+	//if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
+	//	teclaD = true;
+	//}
+	//if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
+	//	teclaW = true;
+	//}
+	//if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
+	//	teclaS = true;
+	//}
+	//if (e->KeyCode == Keys::Space) {
+	//	if (juego->colisionNivel1(g, bmpMensaje)) {
+	//		tmrMensaje->Enabled = true;
+	//	}
+	//}
+}
 };
 }

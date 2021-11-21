@@ -16,6 +16,7 @@ public:
 		pokemonRescued = y;
 		time = z;
 	}
+	
 
 	~Player(){}
 
