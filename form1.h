@@ -584,7 +584,8 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		
 		tmrMenu->Enabled = false;
 		tmrInicio->Enabled = true;
-		string nombrePlayer /*= textBox1->Text*/;
+		String^ nombrePlayer;
+		nombrePlayer = textBox1->Text;
 		usuario->setTime(-1);
 		if (nombrePlayer == "")
 			usuario->setName("Anonimus");
