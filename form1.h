@@ -365,7 +365,7 @@ private: System::Windows::Forms::TextBox^ textBox1;
 		//Render
 		buffer->Render(g);
 		mover();
-		if (juego->getPokemonSize() == 4 && juego->colisionNivel1Terminado()) {
+		if (juego->getPokemonSize() == 0 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
 			tmrNivel2->Enabled = true;
 			this->Width = 900;
