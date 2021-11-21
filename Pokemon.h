@@ -26,7 +26,7 @@ public:
 			height = bmp->Height / 4;
 		}
 		else {
-			width = bmp->Width / 3;
+			width = bmp->Width / 4;
 			height = bmp->Height;
 		}
 		if (visible) {

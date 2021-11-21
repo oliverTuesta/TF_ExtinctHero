@@ -5,7 +5,7 @@ using namespace System::Drawing;
 
 class Mensaje {
 protected:
-	int x, y; //solo se movera hacia arriba y hacia abajo
+	int x, y;
 	int width, height;
 	float zoomW, zoomH;
 

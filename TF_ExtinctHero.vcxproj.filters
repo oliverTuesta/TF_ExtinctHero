@@ -21,6 +21,12 @@
     <ClCompile Include="FormInstrucciones.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MensajeDelAdmin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IngresaNombre.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="form1.h">
@@ -54,6 +60,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pokemon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MensajeDelAdmin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IngresaNombre.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Criminales.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
