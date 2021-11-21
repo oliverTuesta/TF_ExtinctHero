@@ -145,6 +145,8 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Timer^ tmrSegundo;
 private: System::Windows::Forms::Timer^ tmrNivel2;
+private: System::Windows::Forms::Label^ label2;
+private: System::Windows::Forms::TextBox^ textBox1;
 
 
 	private: System::Windows::Forms::Panel^ panel1;
@@ -192,6 +194,8 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 			this->components = (gcnew System::ComponentModel::Container());
 			this->tmrMenu = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tmrInicio = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tmrNivel1 = (gcnew System::Windows::Forms::Timer(this->components));
@@ -209,12 +213,31 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 			// 
 			// panel1
 			// 
+			this->panel1->Controls->Add(this->label2);
+			this->panel1->Controls->Add(this->textBox1);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(0, 0);
-			this->panel1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->panel1->Margin = System::Windows::Forms::Padding(2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1184, 754);
+			this->panel1->Size = System::Drawing::Size(888, 613);
 			this->panel1->TabIndex = 0;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(366, 407);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(143, 13);
+			this->label2->TabIndex = 2;
+			this->label2->Text = L"Ingrese su nombre (opcional)";
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(353, 442);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(165, 20);
+			this->textBox1->TabIndex = 1;
+			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// label1
 			// 
@@ -223,9 +246,10 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::Color::White;
-			this->label1->Location = System::Drawing::Point(12, 9);
+			this->label1->Location = System::Drawing::Point(9, 7);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(164, 20);
+			this->label1->Size = System::Drawing::Size(140, 17);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Tiempo Restante: 60";
 			// 
@@ -253,12 +277,12 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 			// 
 			// form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Control;
-			this->ClientSize = System::Drawing::Size(1181, 753);
+			this->ClientSize = System::Drawing::Size(886, 609);
 			this->Controls->Add(this->panel1);
-			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"form1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"form1";
@@ -369,7 +393,8 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
 			tmrMenu->Enabled = false;
 			tmrInicio->Enabled = true;
-			
+			string nombrePlayer;
+
 			this->Width = 500;
 			this->Height = 500;
 			panel1->Width = 490;
@@ -448,5 +473,6 @@ private: System::Windows::Forms::Timer^ tmrNivel2;
 	Void tmrSegundo_Tick(Object^ sender, EventArgs^ e) {
 		tiempoNivel1--;
 	}
-	};
+	
+};
 }
