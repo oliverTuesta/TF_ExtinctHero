@@ -26,4 +26,6 @@ public:
 		g->DrawImage(bmp, zoom);
 	}
 
+	void setX(int i) { x = i; }
+
 };

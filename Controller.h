@@ -18,6 +18,7 @@ using namespace System::Drawing;
 class Controller {
 private:
 	//----- Atributos del Menu/Inicio -----
+	bool pressingSpaceBar;
 	MainCharacter* mainCharacter;
 	OldMan* oldman;
 	Mensaje* mensaje;
@@ -94,8 +95,7 @@ public:
 		casasNivel2.push_back(new ObstaculosCasa(405, 420, 90, 90));//casita inferior 2
 		casasNivel2.push_back(new ObstaculosCasa(645, 535, 125, 80));//casita inferior 3
 
-
-
+		pressingSpaceBar = false;
 
 
 		for (int i = 0; i < 3; i++) {
@@ -190,7 +190,7 @@ public:
 					break;
 				}
 				mensaje = new Mensaje(g, 255, 44);
-				pokemonIcons.push_back(new PokemonIcon(g, 30, 30, pokemonIcons.size()));
+				pokemonIcons.push_back(new PokemonIcon(0, g, 30, 30, pokemonIcons.size()));
 			}
 		}
 		for (int i = 0; i < cazadores.size(); i++) {
@@ -214,11 +214,14 @@ public:
 		cazadores.clear();
 		pokemones.clear();
 		criminales.clear();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 5; i++) {
 			cazadores.push_back(new Cazador(bmpCazador));
-			criminales.push_back(new Criminales(bmpCriminal, cazadores.at(i)));
+			if (i == 0 || i == 1) {
+				criminales.push_back(new Criminales(bmpCriminal, cazadores.at(i)));
+			}
 		}
 		mainCharacter->setNivel2();
+		pokemonIcons.clear();
 	}
 
 	//-------------------- Nivel 2 -------------------------
@@ -259,10 +262,11 @@ public:
 
 	}
 
-	int colisionNivel2(bool tmr) {
+	int colisionNivel2(Graphics^ g, bool tmr) {
 		//Returns
 		// 0 = no pasa nda
 		// 1 = colision con un powerup -> activa un timer en form.h
+		// 2 = colision con un cazador
 		// 
 		for (int i = 0; i < criminales.size(); i++) {
 			if (!tmr) {
@@ -290,6 +294,31 @@ public:
 				potenciadores.at(i)->setVisible(false);
 			}
 		}
+
+		for (int i = 0; i < cazadores.size(); i++) {
+			if (pressingSpaceBar && cazadores.at(i)->getRectangle().IntersectsWith(mainCharacter->getViewRectangle())) {
+				cazadores.at(i)->setVisible(false);
+				switch (pokemones.size())
+				{
+				case 0: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 1: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5)); break;
+				case 2: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.8, 0.8)); break;
+				case 3: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.5, 0.5, 1)); break;
+				case 4: pokemones.push_back(new Pokemon(cazadores[i]->getX(), cazadores[i]->getY(), 0.4, 0.4, 2)); break;
+				}
+				mensaje = new Mensaje(g, 255, 44);
+				mensaje->setX(630);
+				pokemonIcons.push_back(new PokemonIcon(0, g, 30, 30, pokemonIcons.size()));
+				pokemonIcons.at(pokemonIcons.size() - 1)->setNivel(850);
+				pokemonIcons.at(pokemonIcons.size() - 1)->setX(900);
+				break;
+			}
+		}
+
+		for (int i = 0; i < pokemonIcons.size(); i++)
+		{
+			pokemonIcons.at(i)->setNivel(850);
+		}
 		
 		//Verificacion
 		for (int i = 0; i < potenciadores.size(); i++) {
@@ -298,6 +327,14 @@ public:
 				return 1;
 			}
 		}
+
+		for (int i = 0; i < cazadores.size(); i++) {
+			if (!cazadores.at(i)->getVisible()) {
+				cazadores.erase(cazadores.begin() + i);
+				return 2;
+			}
+		}
+
 		return 0;
 	}
 
@@ -337,5 +374,8 @@ public:
 	}
 
 	int getPokemonSize() { return pokemones.size(); }
+
+	bool getSpaceBar() { return pressingSpaceBar; }
+	void setSpaceBar(bool i) { pressingSpaceBar = i; }
 
 };

@@ -4,15 +4,21 @@
 class PokemonIcon : public Mensaje {
 private:
 	int dx;
+	int nivel;
 	bool moving;
 
 public:
-	PokemonIcon(Graphics^ g, int w, int h, int i, float zW = 1.0, float zH = 1.0) :Mensaje(g, w, h, zW, zH) {
+	PokemonIcon(int j, Graphics^ g, int w, int h, int i, float zW = 1.0, float zH = 1.0) : Mensaje(g, w, h, zW, zH) {
 		dx = 5;
-		/*y = 0 - height * zoomH;
-		x = 270 + (width * zoomW + 10) * i;*/
 		y = 50 + (height * zoomH + 10) * i;
 		x = g->VisibleClipBounds.Width - 100;
+		if (j == 1) {
+			nivel = 850;
+			x = 900;
+		}
+		else {
+			nivel = 750;
+		}
 		moving = true;
 	}
 
@@ -20,8 +26,11 @@ public:
 		if (moving) {
 			x -= dx;
 		}
-		if (x + width + 10 < g->VisibleClipBounds.Width) {
+		if (x < nivel) {
 			moving = false;
 		}
 	}
+
+	void setNivel(int i) { nivel = i; }
+
 };

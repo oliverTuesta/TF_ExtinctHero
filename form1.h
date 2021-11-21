@@ -79,7 +79,7 @@ namespace TFExtinctHero {
 			bmpBulbasaur = gcnew Bitmap("archivos/pokemon/bulbasaur.png");
 			bmpPikachu = gcnew Bitmap("archivos/pokemon/pikachu.png");
 			bmpSnorlax = gcnew Bitmap("archivos/pokemon/snorlax.png");
-			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck.png");
+			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck3.png");
 		}
 
 	private:
@@ -228,7 +228,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(488, 501);
+			this->label2->Location = System::Drawing::Point(500, 501);
 			this->label2->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(193, 17);
@@ -237,8 +237,8 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(471, 544);
-			this->textBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			this->textBox1->Location = System::Drawing::Point(488, 531);
+			this->textBox1->Margin = System::Windows::Forms::Padding(4);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(219, 22);
 			this->textBox1->TabIndex = 1;
@@ -394,12 +394,18 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		//Move & Draw
 		buffer->Graphics->DrawImage(bmpFondoNivel2, 0, 0, panel1->Width, panel1->Height);
 		juego->drawEverythingNivle2(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpCriminal, bmpPotenciador, bmpMensaje, tmrMensaje->Enabled);
+		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
+		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
 		mover();
 		//Colision
-		switch (juego->colisionNivel2(tmrPowerup->Enabled))
+		switch (juego->colisionNivel2(buffer->Graphics, tmrPowerup->Enabled))
 		{
 		case 1:
 			tmrPowerup->Enabled = true;
+			break;
+		case 2:
+			tmrMensaje->Enabled = true;
+			break;
 		}
 		
 		//Render
@@ -432,10 +438,14 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
 			teclaS = true;
 		}
-		if (e->KeyCode == Keys::Space) {
+
+		if (e->KeyCode == Keys::Space && tmrNivel1->Enabled) {
 			if (juego->colisionNivel1(g, bmpMensaje)) {
 				tmrMensaje->Enabled = true;
 			}
+		}
+		if (e->KeyCode == Keys::Space && tmrNivel2->Enabled) {
+			juego->setSpaceBar(true);
 		}
 		
 	}
@@ -451,6 +461,9 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		}
 		if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
 			teclaS = false;
+		}
+		if (e->KeyCode == Keys::Space && tmrNivel2->Enabled) {
+			juego->setSpaceBar(false);
 		}
 	}
 	void mover() {

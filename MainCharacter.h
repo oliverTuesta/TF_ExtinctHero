@@ -89,14 +89,14 @@ public:
 	void setNivel1() {
 		x = 30;
 		y = 220;
-		dx = dy = 5;
+		dx = dy = 25;
 		zoomW = zoomH = 0.5;
 	}
 
 	void setNivel2() {
 		x = 30;
 		y = 350;
-		dx = dy = 5;
+		dx = dy = 15;
 		zoomW = zoomH = 0.5;
 	}
 

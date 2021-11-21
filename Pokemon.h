@@ -3,7 +3,7 @@
 
 class Pokemon : public Character {
 private:
-	bool pokemonType;
+	int pokemonType;
 	int direccion;
 public:
 	Pokemon(int _x, int _y, float w, float h, int type = 0) : Character () {
@@ -25,8 +25,8 @@ public:
 			width = bmp->Width / 3;
 			height = bmp->Height / 4;
 		}
-		else {
-			width = bmp->Width / 4;
+		else if (pokemonType == 2){
+			width = bmp->Width / 5;
 			height = bmp->Height;
 		}
 		if (visible) {
@@ -67,7 +67,8 @@ public:
 			break;
 		case 2: //Psyduck
 			idx++;
-			if (idx > 3)idx = 0;
+			if (idx > 4)idx = 0;
+			break;
 		}
 	}
 
