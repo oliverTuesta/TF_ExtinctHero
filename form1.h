@@ -54,7 +54,7 @@ namespace TFExtinctHero {
 			//Nivel 1
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
-			tiempoNivel1 = 60;
+			tiempoNivel1 = 2;//////////////////////////////////////////////////////////////////
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Nivel 2
@@ -380,9 +380,14 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		//Render
 		buffer->Render(g);
 		mover();
-		if (tiempoNivel1 < 0) {
+		if (tiempoNivel1 < 1) {
 			timeUsuario = 60 - tiempoNivel1;
+			usuario->setPokemonRescued(juego->getPokemonSize());
+			usuario->setTime(timeUsuario);
+			file->agregarJugador(usuario);
+			file->orderPlayers();
 			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, juego->getPokemonSize(), false);
+			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel1->Enabled = false;
 		}
@@ -423,7 +428,12 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		}
 		if (juego->getPokemonSize() == 5) {
 			timeUsuario += 90 - tiempoNivel1;
+			usuario->setPokemonRescued(9);
+			usuario->setTime(timeUsuario);
+			file->agregarJugador(usuario);
+			file->orderPlayers();
 			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, 9, true);
+			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel2->Enabled = false;
 		}

@@ -50,8 +50,21 @@ namespace TFExtinctHero {
 		int pokemonrescued;
 		bool victory;
 
+		//Leaderboard
+		String^ lbn1; int lbt1; int lbp1;
+		String^ lbn2; int lbt2; int lbp2;
+		String^ lbn3; int lbt3; int lbp3;
+		String^ lbn4; int lbt4; int lbp4;
+		String^ lbn5; int lbt5; int lbp5;
+		String^ lbn6; int lbt6; int lbp6;
+		String^ lbn7; int lbt7; int lbp7;
+		String^ lbn8; int lbt8; int lbp8;
+		String^ lbn9; int lbt9; int lbp9;
+		String^ lbn10; int lbt10; int lbp10;
+
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Timer^ tmrScreen;
+	private: System::Windows::Forms::Timer^ timer;
 		   int userPokemon;
 
 	protected:
@@ -94,6 +107,7 @@ namespace TFExtinctHero {
 			this->tmrDefeat = (gcnew System::Windows::Forms::Timer(this->components));
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->tmrScreen = (gcnew System::Windows::Forms::Timer(this->components));
+			this->timer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// label1
@@ -156,6 +170,10 @@ namespace TFExtinctHero {
 			this->tmrScreen->Enabled = true;
 			this->tmrScreen->Tick += gcnew System::EventHandler(this, &Leaderboard::tmrScreen_Tick);
 			// 
+			// timer
+			// 
+			this->timer->Tick += gcnew System::EventHandler(this, &Leaderboard::timer_Tick);
+			// 
 			// Leaderboard
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -176,12 +194,11 @@ namespace TFExtinctHero {
 	Void tmrVictory_Tick(System::Object^ sender, System::EventArgs^ e) {
 		tmrVictory->Enabled = false;
 		tmrScreen->Enabled = false;
+		timer->Enabled = true;
 		label1->Visible = true;
 		label2->Visible = true;
 		label3->Visible = true;
 		label4->Visible = true;
-		buffer->Graphics->Clear(Color::WhiteSmoke);
-		buffer->Render();
 	}
 
 	Void tmrDefeat_Tick(System::Object^ sender, System::EventArgs^ e) {
@@ -215,5 +232,150 @@ namespace TFExtinctHero {
 		
 		buffer->Render();
 	}
-};
+
+	public: 
+		void setLeaderBoardNames(vector<Player*>leaderboard) {
+			int aux = leaderboard.size();
+			lbn1 = gcnew String(leaderboard.at(0)->getName().c_str());
+			lbt1 = leaderboard.at(0)->getTime();
+			lbp1 = leaderboard.at(0)->getPokemonRescued();
+			if (leaderboard.size() >= 2) {
+				lbn2 = gcnew String(leaderboard.at(1)->getName().c_str());
+				lbt2 = leaderboard.at(1)->getTime();
+				lbp2 = leaderboard.at(1)->getPokemonRescued();
+			}
+			else {
+				lbn2 = gcnew String("-");
+				lbt2 = 0;
+				lbp2 = 0;
+			}
+			if (leaderboard.size() >= 3) {
+				lbn3 = gcnew String(leaderboard.at(2)->getName().c_str());
+				lbt3 = leaderboard.at(2)->getTime();
+				lbp3 = leaderboard.at(2)->getPokemonRescued();
+			}
+			else {
+				lbn3 = gcnew String("-");
+				lbt3 = 0;
+				lbp3 = 0;
+			}
+			if (leaderboard.size() >= 4) {
+				lbn4 = gcnew String(leaderboard.at(3)->getName().c_str());
+				lbt4 = leaderboard.at(3)->getTime();
+				lbp4 = leaderboard.at(3)->getPokemonRescued();
+			}
+			else {
+				lbn4 = gcnew String("-");
+				lbt4 = 0;
+				lbp4 = 0;
+			}
+			if (leaderboard.size() >= 5) {
+				lbn5 = gcnew String(leaderboard.at(4)->getName().c_str());
+				lbt5 = leaderboard.at(4)->getTime();
+				lbp5 = leaderboard.at(4)->getPokemonRescued();
+			}
+			else {
+				lbn5 = gcnew String("-");
+				lbt5 = 0;
+				lbp5 = 0;
+			}
+			if (leaderboard.size() >= 6) {
+				lbn6 = gcnew String(leaderboard.at(5)->getName().c_str());
+				lbt6 = leaderboard.at(5)->getTime();
+				lbp6 = leaderboard.at(5)->getPokemonRescued();
+			}
+			else {
+				lbn6 = gcnew String("-");
+				lbt6 = 0;
+				lbp6 = 0;
+			}
+			if (leaderboard.size() >= 7) {
+				lbn7 = gcnew String(leaderboard.at(6)->getName().c_str());
+				lbt7 = leaderboard.at(6)->getTime();
+				lbp7 = leaderboard.at(6)->getPokemonRescued();
+			}
+			else {
+				lbn7 = gcnew String("-");
+				lbt7 = 0;
+				lbp7 = 0;
+			}
+			if (leaderboard.size() >= 8) {
+				lbn8 = gcnew String(leaderboard.at(7)->getName().c_str());
+				lbt8 = leaderboard.at(7)->getTime();
+				lbp8 = leaderboard.at(7)->getPokemonRescued();
+			}
+			else {
+				lbn8 = gcnew String("-");
+				lbt8 = 0;
+				lbp8 = 0;
+			}
+			if (leaderboard.size() >= 9) {
+				lbn9 = gcnew String(leaderboard.at(8)->getName().c_str());
+				lbt9 = leaderboard.at(8)->getTime();
+				lbp9 = leaderboard.at(8)->getPokemonRescued();
+			}
+			else {
+				lbn9 = gcnew String("-");
+				lbt9 = 0;
+				lbp9 = 0;
+			}
+			if (leaderboard.size() >= 10) {
+				lbn10 = gcnew String(leaderboard.at(9)->getName().c_str());
+				lbt10 = leaderboard.at(9)->getTime();
+				lbp10 = leaderboard.at(9)->getPokemonRescued();
+			}
+			else {
+				lbn10 = gcnew String("-");
+				lbt10 = 0;
+				lbp10 = 0;
+			}
+		}
+	private: System::Void timer_Tick(System::Object^ sender, System::EventArgs^ e) {
+		buffer->Graphics->Clear(this->label1->BackColor);
+		
+		buffer->Graphics->DrawString(
+			lbn1 + "\n\n" +
+			lbn2 + "\n\n" +
+			lbn3 + "\n\n" +
+			lbn4 + "\n\n" +
+			lbn5 + "\n\n" +
+			lbn6 + "\n\n" +
+			lbn7 + "\n\n" +
+			lbn8 + "\n\n" +
+			lbn9 + "\n\n" +
+			lbn10,
+			gcnew Drawing::Font("Microsoft Sans Serif", 10, FontStyle::Regular),
+			Brushes::Black, 30, 140);
+
+		buffer->Graphics->DrawString(
+			lbt1 + "\n\n" +
+			lbt2 + "\n\n" +
+			lbt3 + "\n\n" +
+			lbt4 + "\n\n" +
+			lbt5 + "\n\n" +
+			lbt6 + "\n\n" +
+			lbt7 + "\n\n" +
+			lbt8 + "\n\n" +
+			lbt9 + "\n\n" +
+			lbt10,
+			gcnew Drawing::Font("Microsoft Sans Serif", 10, FontStyle::Regular),
+			Brushes::Black, 270, 140);
+
+		buffer->Graphics->DrawString(
+			lbp1 + "\n\n" +
+			lbp2 + "\n\n" +
+			lbp3 + "\n\n" +
+			lbp4 + "\n\n" +
+			lbp5 + "\n\n" +
+			lbp6 + "\n\n" +
+			lbp7 + "\n\n" +
+			lbp8 + "\n\n" +
+			lbp9 + "\n\n" +
+			lbp10,
+			gcnew Drawing::Font("Microsoft Sans Serif", 10, FontStyle::Regular),
+			Brushes::Black, 470, 140);
+
+		buffer->Render();
+	}
+	};
 }
