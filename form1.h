@@ -79,7 +79,7 @@ namespace TFExtinctHero {
 			bmpBulbasaur = gcnew Bitmap("archivos/pokemon/bulbasaur.png");
 			bmpPikachu = gcnew Bitmap("archivos/pokemon/pikachu.png");
 			bmpSnorlax = gcnew Bitmap("archivos/pokemon/snorlax.png");
-			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck3.png");
+			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck4.png");
 		}
 
 	private:
@@ -375,7 +375,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		//Render
 		buffer->Render(g);
 		mover();
-		if (juego->getPokemonSize() == 4 && juego->colisionNivel1Terminado()) {
+		if (juego->getPokemonSize() == 0 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
 			tmrNivel2->Enabled = true;
 			this->Width = 900;

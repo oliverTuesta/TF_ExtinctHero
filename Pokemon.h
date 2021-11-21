@@ -26,7 +26,7 @@ public:
 			height = bmp->Height / 4;
 		}
 		else if (pokemonType == 2){
-			width = bmp->Width / 5;
+			width = bmp->Width / 8;
 			height = bmp->Height;
 		}
 		if (visible) {
@@ -67,7 +67,7 @@ public:
 			break;
 		case 2: //Psyduck
 			idx++;
-			if (idx > 4)idx = 0;
+			if (idx > 7)idx = 0;
 			break;
 		}
 	}
