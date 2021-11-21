@@ -27,6 +27,9 @@
     <ClCompile Include="IngresaNombre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Leaderboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="form1.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPotenciador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaderboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

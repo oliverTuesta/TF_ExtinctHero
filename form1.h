@@ -2,7 +2,7 @@
 #include "Controller.h"
 #include "FormInstrucciones.h"
 #include "MensajeDelAdmin.h"
-#include "File.h"
+#include "Leaderboard.h"
 
 namespace TFExtinctHero {
 
@@ -66,7 +66,6 @@ namespace TFExtinctHero {
 			bmpMensaje = gcnew Bitmap("archivos/mensajePositivo.png");
 			juego = new Controller(bmpPersonajePrincipal, bmpPersonajeAncianoMINI, bmpCazador, bmpCriminal, bmpPotenciador, bmpMensaje);
 			teclaA = teclaD = teclaW = teclaS = false;
-			usuario = new Player("Google", 0, 0);
 
 			//Pokemon
 			bmpWartortleIcon = gcnew Bitmap("archivos/icons/wartortleIcon.png");
@@ -80,6 +79,11 @@ namespace TFExtinctHero {
 			bmpPikachu = gcnew Bitmap("archivos/pokemon/pikachu.png");
 			bmpSnorlax = gcnew Bitmap("archivos/pokemon/snorlax.png");
 			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck4.png");
+
+			//Leaderboard
+			file = new File();
+			file->readData();
+			usuario = new Player("Google", 0, 0);
 		}
 
 	private:
@@ -133,6 +137,7 @@ namespace TFExtinctHero {
 		Bitmap^ bmpPsyduck;
 
 		//Leaderboard
+		Leaderboard^ frLeaderboard;
 		File* file;
 		Player* usuario;
 		int pokemonRescuedUsuario;
@@ -375,6 +380,12 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		//Render
 		buffer->Render(g);
 		mover();
+		if (tiempoNivel1 < 0) {
+			timeUsuario = 60 - tiempoNivel1;
+			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, juego->getPokemonSize(), false);
+			frLeaderboard->Show();
+			tmrNivel1->Enabled = false;
+		}
 		if (juego->getPokemonSize() == 0 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
 			tmrNivel2->Enabled = true;
@@ -385,6 +396,8 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			buffer = space->Allocate(g, panel1->ClientRectangle);
 			CenterToScreen();
 			juego->changetoNivel2(bmpCazador, bmpCriminal);
+			timeUsuario = 60 - tiempoNivel1;
+			tiempoNivel1 = 90;
 		}
 
 	}
@@ -396,6 +409,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		juego->drawEverythingNivle2(buffer->Graphics, bmpPersonajePrincipal, bmpCazador, bmpCriminal, bmpPotenciador, bmpMensaje, tmrMensaje->Enabled);
 		juego->drawPokemonIcon(buffer->Graphics, bmpWartortleIcon, bmpBulbasaurIcon, bmpPikachuIcon, bmpSnorlaxIcon, bmpPsyduckIcon);
 		juego->drawPokemon(buffer->Graphics, bmpWartortle, bmpBulbasaur, bmpPikachu, bmpSnorlax, bmpPsyduck);
+		label1->Text = " Tiempo Restante: " + tiempoNivel1 + "  ";
 		mover();
 		//Colision
 		switch (juego->colisionNivel2(buffer->Graphics, tmrPowerup->Enabled))
@@ -406,6 +420,12 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		case 2:
 			tmrMensaje->Enabled = true;
 			break;
+		}
+		if (juego->getPokemonSize() == 5) {
+			timeUsuario += 90 - tiempoNivel1;
+			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, 9, true);
+			frLeaderboard->Show();
+			tmrNivel2->Enabled = false;
 		}
 		
 		//Render
@@ -537,26 +557,9 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		buffer = space->Allocate(g, panel1->ClientRectangle);
 		CenterToScreen();
 		
-
 	}
 
-	//if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
-	//	teclaA = true;
-	//}
-	//if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
-	//	teclaD = true;
-	//}
-	//if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
-	//	teclaW = true;
-	//}
-	//if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
-	//	teclaS = true;
-	//}
-	//if (e->KeyCode == Keys::Space) {
-	//	if (juego->colisionNivel1(g, bmpMensaje)) {
-	//		tmrMensaje->Enabled = true;
-	//	}
-	//}
+	
 	}
 	Void tmrPowerup_Tick(System::Object^ sender, System::EventArgs^ e) {
 		tmrPowerup->Enabled = false;

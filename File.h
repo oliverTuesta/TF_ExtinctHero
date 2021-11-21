@@ -76,6 +76,29 @@ public:
 		playersPlayed = players.size();
 	}
 
+	void orderPlayers() {
+		Player* aux = new Player("", 0, 0);
+		for (int i = 0; i < players.size() - 1; i++)
+		{
+			for (int j = i + 1; j < players.size(); j++)
+			{
+				// i = aux
+				// i = j
+				// j = aux
+				if (players.at(i)->getPokemonRescued() < players.at(j)->getPokemonRescued()) {
+					players.at(i) = aux;
+					players.at(i) = players.at(j);
+					players.at(j) = aux;
+				}
+				if (players.at(i)->getTime() < players.at(j)->getTime()) {
+					players.at(i) = aux;
+					players.at(i) = players.at(j);
+					players.at(j) = aux;
+				}
+			}
+		}
+	}
+
 	vector<Player*> getPlayers() { return players; }
 
 };
