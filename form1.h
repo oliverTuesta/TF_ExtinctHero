@@ -3,6 +3,8 @@
 #include "FormInstrucciones.h"
 #include "MensajeDelAdmin.h"
 #include "File.h"
+#include"String.h"
+#include <vcclr.h>
 
 namespace TFExtinctHero {
 
@@ -81,7 +83,6 @@ namespace TFExtinctHero {
 			bmpSnorlax = gcnew Bitmap("archivos/pokemon/snorlax.png");
 			bmpPsyduck = gcnew Bitmap("archivos/pokemon/psyduck.png");
 		}
-
 	private:
 		//Buffer
 		Graphics^ g;
@@ -392,19 +393,6 @@ private: System::Windows::Forms::TextBox^ textBox1;
 		buffer->Render(g);
 	}
 	Void form1_KeyDown(Object^ sender, KeyEventArgs^ e) {
-		if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true) {
-			tmrMenu->Enabled = false;
-			tmrInicio->Enabled = true;
-			string nombrePlayer;
-
-			this->Width = 500;
-			this->Height = 500;
-			panel1->Width = 490;
-			panel1->Height = 470;
-			buffer = space->Allocate(g, panel1->ClientRectangle);
-			CenterToScreen();
-			
-		}
 		
 		if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
 			teclaA = true;
@@ -475,45 +463,40 @@ private: System::Windows::Forms::TextBox^ textBox1;
 	Void tmrSegundo_Tick(Object^ sender, EventArgs^ e) {
 		tiempoNivel1--;
 	}
-	
+
 private: System::Void textBox1_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	if (e->KeyCode == Keys::Enter && tmrMenu->Enabled == true && usuario->getTime() != -1) {
-		textBox1->Enabled = false;
+
 		textBox1->Visible = false;
 		label2->Visible = false;
 		
 		tmrMenu->Enabled = false;
 		tmrInicio->Enabled = true;
-		string nombrePlayer;
+		String^ nombrePlayer;
+		nombrePlayer = textBox1->Text;
 		usuario->setTime(-1);
 
+		if (nombrePlayer == "")
+			usuario->setName("Anonimus"); 
+		else usuario->setName(nombrePlayer);
+		//para implementar en un label o textbox, usar: 
+		//labeln->Text = gcnew String(usuario->getName().c_str());
+		//(n = numero de label);
+		
 		this->Width = 500;
 		this->Height = 500;
 		panel1->Width = 490;
 		panel1->Height = 470;
 		buffer = space->Allocate(g, panel1->ClientRectangle);
 		CenterToScreen();
-		
+		Form^ bugForm = gcnew Form();
+		bugForm->Show();
+		bugForm->Close();
+		textBox1->Enabled = false;
 
 	}
 
-	//if (e->KeyCode == Keys::A || e->KeyCode == Keys::Left) {
-	//	teclaA = true;
-	//}
-	//if (e->KeyCode == Keys::D || e->KeyCode == Keys::Right) {
-	//	teclaD = true;
-	//}
-	//if (e->KeyCode == Keys::W || e->KeyCode == Keys::Up) {
-	//	teclaW = true;
-	//}
-	//if (e->KeyCode == Keys::S || e->KeyCode == Keys::Down) {
-	//	teclaS = true;
-	//}
-	//if (e->KeyCode == Keys::Space) {
-	//	if (juego->colisionNivel1(g, bmpMensaje)) {
-	//		tmrMensaje->Enabled = true;
-	//	}
-	//}
+	
 }
 };
 }
