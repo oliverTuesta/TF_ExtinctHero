@@ -77,5 +77,8 @@
     <ClInclude Include="Criminales.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CPotenciador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
