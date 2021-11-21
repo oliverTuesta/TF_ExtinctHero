@@ -150,6 +150,7 @@ private: System::Windows::Forms::Label^ label2;
 private: System::Windows::Forms::TextBox^ textBox1;
 
 
+
 	private: System::Windows::Forms::Panel^ panel1;
 
 
@@ -467,6 +468,7 @@ private: System::Windows::Forms::TextBox^ textBox1;
 			if (teclaS) {
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
 			}
+
 		}
 	}
 	Void tmrMensaje_Tick(Object^ sender, EventArgs^ e) {

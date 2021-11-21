@@ -68,8 +68,33 @@ public:
 			cazadores.push_back(new Cazador(bmpCazador));
 		}
 
-		//---------- Constructor del Nivel 2 ----------
-		casasNivel2.push_back(new ObstaculosCasa(155, 140, 65, 50));
+		//---------- Constructor del Nivel 2 ----------// Size dimensions: 885 width 760 heigth
+		casasNivel2.push_back(new ObstaculosCasa(0, 0, 885, 145));//tierra superior	
+		casasNivel2.push_back(new ObstaculosCasa(0, 0, 75, 320));//arboles superior izquierda
+		casasNivel2.push_back(new ObstaculosCasa(330, 145, 110, 160));//tierra peque;a 2
+		casasNivel2.push_back(new ObstaculosCasa(530, 145, 75, 100));//tierra peque;a 3
+		casasNivel2.push_back(new ObstaculosCasa(790, 145, 95, 105));//tierra peque;a 4
+
+
+		casasNivel2.push_back(new ObstaculosCasa(155, 140, 65, 50));//arbolito superior 2
+		casasNivel2.push_back(new ObstaculosCasa(75, 145, 70, 155));//casita superior 1
+		casasNivel2.push_back(new ObstaculosCasa(250, 170, 80, 50));//casita superior 2
+		casasNivel2.push_back(new ObstaculosCasa(625, 170, 130, 70));//casita superior 3
+
+
+		casasNivel2.push_back(new ObstaculosCasa(0, 400, 180, 360));//tierra inferior grande
+		casasNivel2.push_back(new ObstaculosCasa(180, 640, 240, 120));//tierra inferior peque;a
+		casasNivel2.push_back(new ObstaculosCasa(500, 680, 160, 80));//tierra inferior peque;a 2
+		casasNivel2.push_back(new ObstaculosCasa(665, 710, 220, 50));//arboles inferior derecha 
+		casasNivel2.push_back(new ObstaculosCasa(845, 450, 40, 310));//arboles inferior derecha 2
+
+		casasNivel2.push_back(new ObstaculosCasa(170, 490, 85, 75));//casita inferior 1
+		casasNivel2.push_back(new ObstaculosCasa(405, 420, 90, 90));//casita inferior 2
+		casasNivel2.push_back(new ObstaculosCasa(645, 535, 125, 80));//casita inferior 3
+
+
+
+
 
 	}
 
