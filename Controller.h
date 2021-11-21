@@ -5,6 +5,7 @@
 #include "PokemonIcons.h"
 #include "Pokemon.h"
 #include "Criminales.h"
+#include "CPotenciador.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -23,13 +24,14 @@ private:
 	vector<Cazador*>cazadores;
 	vector<Criminales*>criminales;
 	vector<Pokemon*>pokemones;
+	vector<Potenciador*>potenciadores;
 	vector<PokemonIcon*>pokemonIcons;
 	vector<ObstaculosCasa*>casasMenu;
 	vector<ObstaculosCasa*>casasNivel1;
 	vector<ObstaculosCasa*>casasNivel2;
 
 public:
-	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje) {
+	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpPotenciador, Bitmap^ bmpmensaje) {
 		//---------- Constructor del Menu/Inicio ----------
 		mainCharacter = new MainCharacter(bmpMainCharacter);
 		oldman = new OldMan(bmpOldMan);
@@ -70,6 +72,10 @@ public:
 
 		//---------- Constructor del Nivel 2 ----------
 		casasNivel2.push_back(new ObstaculosCasa(155, 140, 65, 50));
+
+		for (int i = 0; i < 3; i++) {
+			potenciadores.push_back(new Potenciador(bmpPotenciador->Width / 10, bmpPotenciador->Height / 3));
+		}
 
 	}
 
@@ -193,7 +199,7 @@ public:
 	//-------------------- Nivel 2 -------------------------
 	////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////
-	void drawEverythingNivle2(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje, bool i) {
+	void drawEverythingNivle2(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpPotenciador, Bitmap^ bmpmensaje, bool i) {
 		for (int i = 0; i < cazadores.size(); i++) {
 			cazadores.at(i)->move(g, this->getMainCharacter());
 		}
@@ -217,14 +223,57 @@ public:
 			mensaje->draw(g, bmpmensaje);
 		}
 
+		for (int i = 0; i < potenciadores.size(); i++) {
+			potenciadores.at(i)->draw(g, bmpPotenciador);
+			potenciadores.at(i)->move();
+		}
+
 		for (int i = 0; i < casasNivel2.size(); i++)	{
 			casasNivel2.at(i)->draw(g);
 		}
 
 	}
 
-	void colisionNivel2(Graphics^ g) {
-
+	int colisionNivel2(bool tmr) {
+		//Returns
+		// 0 = no pasa nda
+		// 1 = colision con un powerup -> activa un timer en form.h
+		// 
+		for (int i = 0; i < criminales.size(); i++) {
+			if (!tmr) {
+				criminales.at(i)->setSpeed(0);
+			}
+		}
+		//Colision
+		for (int i = 0; i < potenciadores.size(); i++) {
+			if (!tmr && mainCharacter->getViewRectangle().IntersectsWith(potenciadores.at(i)->getRectangle())) {
+				if (potenciadores.at(i)->getIDY() == 0) {
+					for (int i = 0; i < criminales.size(); i++)	{
+						criminales.at(i)->setSpeed(1);
+					}
+				}
+				else if (potenciadores.at(i)->getIDY() == 1) {
+					for (int i = 0; i < criminales.size(); i++) {
+						criminales.at(i)->setSpeed(2);
+					}
+				}
+				else {
+					for (int i = 0; i < criminales.size(); i++) {
+						criminales.at(i)->setSpeed(3);
+					}
+				}
+				potenciadores.at(i)->setVisible(false);
+			}
+		}
+		
+		//Verificacion
+		for (int i = 0; i < potenciadores.size(); i++) {
+			if (!potenciadores.at(i)->getVisible()) {
+				potenciadores.erase(potenciadores.begin() + i);
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 
