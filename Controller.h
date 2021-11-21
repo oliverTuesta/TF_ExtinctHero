@@ -26,6 +26,7 @@ private:
 	vector<PokemonIcon*>pokemonIcons;
 	vector<ObstaculosCasa*>casasMenu;
 	vector<ObstaculosCasa*>casasNivel1;
+	vector<ObstaculosCasa*>casasNivel2;
 
 public:
 	Controller(Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan, Bitmap^ bmpCazador, Bitmap^ bmpCriminal, Bitmap^ bmpmensaje) {
@@ -48,6 +49,8 @@ public:
 		casasNivel1.push_back(new ObstaculosCasa(0, 670, 300, 85));	   // imperfecciones
 		casasNivel1.push_back(new ObstaculosCasa(0, 265, 80, 405));	   //
 
+
+		//---------- Constructor del Nivel 1 ----------
 		casasNivel1.push_back(new ObstaculosCasa(155, 140, 65, 50));
 		casasNivel1.push_back(new ObstaculosCasa(250, 60, 55, 70));
 		casasNivel1.push_back(new ObstaculosCasa(350, 60, 360, 70));
@@ -64,6 +67,10 @@ public:
 		for (int i = 0; i < 4; i++) { 
 			cazadores.push_back(new Cazador(bmpCazador));
 		}
+
+		//---------- Constructor del Nivel 2 ----------
+		casasNivel2.push_back(new ObstaculosCasa(155, 140, 65, 50));
+
 	}
 
 	~Controller() {
@@ -209,6 +216,11 @@ public:
 		if (i) {
 			mensaje->draw(g, bmpmensaje);
 		}
+
+		for (int i = 0; i < casasNivel2.size(); i++)	{
+			casasNivel2.at(i)->draw(g);
+		}
+
 	}
 
 	void colisionNivel2(Graphics^ g) {
