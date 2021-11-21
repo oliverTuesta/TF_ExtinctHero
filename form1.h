@@ -468,7 +468,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosCasa());
 			}
 		}
-		if (tmrNivel1->Enabled || tmrNivel2->Enabled) {
+		if (tmrNivel1->Enabled) {
 			if (teclaA) {
 				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel1());
 			}
@@ -480,6 +480,21 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			}
 			if (teclaS) {
 				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel1());
+			}
+
+		}
+		if (tmrNivel2->Enabled) {
+			if (teclaA) {
+				juego->getMainCharacter()->moveLeft(buffer->Graphics, juego->getObstaculosNivel2());
+			}
+			if (teclaD) {
+				juego->getMainCharacter()->moveRight(buffer->Graphics, juego->getObstaculosNivel2());
+			}
+			if (teclaW) {
+				juego->getMainCharacter()->moveUp(buffer->Graphics, juego->getObstaculosNivel2());
+			}
+			if (teclaS) {
+				juego->getMainCharacter()->moveDown(buffer->Graphics, juego->getObstaculosNivel2());
 			}
 
 		}

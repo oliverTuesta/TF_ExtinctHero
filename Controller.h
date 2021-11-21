@@ -307,6 +307,7 @@ public:
 
 	vector<ObstaculosCasa*> getObstaculosCasa() { return casasMenu; }
 	vector<ObstaculosCasa*> getObstaculosNivel1() { return casasNivel1; }
+	vector<ObstaculosCasa*> getObstaculosNivel2() { return casasNivel2; }
 
 	void drawPokemon(Graphics^ g, Bitmap^ bmp1, Bitmap^ bmp2, Bitmap^ bmp3, Bitmap^ bmp4, Bitmap^ bmp5) {
 		for (int i = 0; i < pokemones.size(); i++) {
