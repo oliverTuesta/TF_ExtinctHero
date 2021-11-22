@@ -87,12 +87,12 @@ public:
 				// i = aux
 				// i = j
 				// j = aux
-				if (players.at(i)->getPokemonRescued() < players.at(j)->getPokemonRescued()) {
+				if (players.at(i)->getTime() > players.at(j)->getTime()) {
 					aux = players.at(i);
 					players.at(i) = players.at(j);
 					players.at(j) = aux;
 				}
-				if (players.at(i)->getTime() > players.at(j)->getTime()) {
+				if (players.at(i)->getPokemonRescued() < players.at(j)->getPokemonRescued()) {
 					aux = players.at(i);
 					players.at(i) = players.at(j);
 					players.at(j) = aux;

@@ -54,7 +54,7 @@ namespace TFExtinctHero {
 			//Nivel 1
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
-			tiempoNivel1 = 60;//////////////////////////////////////////////////////////////////
+			tiempoNivel1 = 0;//////////////////////////////////////////////////////////////////
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Nivel 2
@@ -666,6 +666,10 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 
 		textBox1->Enabled = false;
 		textBox1->Visible = false;
+
+		Form^ fr = gcnew Form();
+		fr->Show();
+		fr->Close();
 
 		this->Width = 500;
 		this->Height = 500;
