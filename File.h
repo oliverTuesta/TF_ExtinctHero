@@ -28,6 +28,8 @@ public:
 	~File() {}
 
 	void readData() {
+		players.clear();
+
 		fileRead.open("configuration.txt", ios::in);
 
 		if (fileRead.fail()) {
@@ -86,12 +88,12 @@ public:
 				// i = j
 				// j = aux
 				if (players.at(i)->getPokemonRescued() < players.at(j)->getPokemonRescued()) {
-					players.at(i) = aux;
+					aux = players.at(i);
 					players.at(i) = players.at(j);
 					players.at(j) = aux;
 				}
-				if (players.at(i)->getTime() < players.at(j)->getTime()) {
-					players.at(i) = aux;
+				if (players.at(i)->getTime() > players.at(j)->getTime()) {
+					aux = players.at(i);
 					players.at(i) = players.at(j);
 					players.at(j) = aux;
 				}

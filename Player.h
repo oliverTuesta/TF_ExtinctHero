@@ -24,7 +24,13 @@ public:
 	int getPokemonRescued() { return pokemonRescued; }
 	int getTime() { return time; }
 
-	void setName(string e) { name = e; }
+	void setName(System::String^ e) {
+		name = "";
+		for (int i = 0; i < e->Length; i++) {
+			name.append(" ");
+			name[i] = e[i];
+		}
+	}
 	void setPokemonRescued(int e) { pokemonRescued = e; }
 	void setTime(int e) { time = e; }
 

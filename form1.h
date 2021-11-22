@@ -361,6 +361,9 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			tmrNivel1->Enabled = true;
 			tmrSegundo->Enabled = true;
 			label1->Visible = true;
+			if (juego->getSecondTime()) {
+				juego->setLvl1Again(bmpCazador);
+			}
 		}
 		buffer->Graphics->DrawImage(bmpFondoInicio, 0, 0, panel1->Width, panel1->Height);
 		juego->drawEverythingMenu(buffer->Graphics, bmpPersonajePrincipal, bmpPersonajeAncianoMINI);
@@ -385,11 +388,30 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			usuario->setPokemonRescued(juego->getPokemonSize());
 			usuario->setTime(timeUsuario);
 			file->agregarJugador(usuario);
+			file->readData();
 			file->orderPlayers();
-			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, juego->getPokemonSize(), false);
+			frLeaderboard = gcnew Leaderboard(gcnew String(usuario->getName().c_str()), timeUsuario, juego->getPokemonSize(), false);
 			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel1->Enabled = false;
+
+			this->Width = 900;
+			this->Height = 600;
+			panel1->Width = 900;
+			panel1->Height = 600;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			textBox1->Enabled = true;
+			textBox1->Visible = true;
+			label2->Visible = true;
+			label1->Visible = false;
+			tmrMenu->Enabled = true;
+			tiempoNivel1 = 60;
+			tmrSegundo->Enabled = false;
+			teclaA = teclaD = teclaS = teclaW = false;
+			juego->getMainCharacter()->setMenu();
+ 			juego->setMenuAgain();
+			juego->setSecondTime(true);
 		}
 		if (juego->getPokemonSize() == 4 && juego->colisionNivel1Terminado()) {
 			tmrNivel1->Enabled = false;
@@ -403,6 +425,9 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			juego->changetoNivel2(bmpCazador, bmpCriminal);
 			timeUsuario = 60 - tiempoNivel1;
 			tiempoNivel1 = 90;
+			if (juego->getSecondTime()) {
+				juego->setLvl2Again(bmpPotenciador);
+			}
 		}
 
 	}
@@ -430,20 +455,68 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			usuario->setPokemonRescued(juego->getPokemonSize());
 			usuario->setTime(timeUsuario);
 			file->agregarJugador(usuario);
+			file->readData();
 			file->orderPlayers();
-			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, juego->getPokemonSize(), false);
+			frLeaderboard = gcnew Leaderboard(gcnew String(usuario->getName().c_str()), timeUsuario, juego->getPokemonSize() + 4, false);
 			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel2->Enabled = false;
+
+			this->Width = 900;
+			this->Height = 600;
+			panel1->Width = 900;
+			panel1->Height = 600;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			textBox1->Enabled = true;
+			textBox1->Visible = true;
+			label2->Visible = true;
+			label1->Visible = false;
+			tmrMenu->Enabled = true;
+			tiempoNivel1 = 60;
+			tmrSegundo->Enabled = false;
+			teclaA = teclaD = teclaS = teclaW = false;
+			juego->getMainCharacter()->setMenu();
+			juego->setMenuAgain();
 			break;
+		}
+		if (tiempoNivel1 < 1) {
+			timeUsuario += 90 - tiempoNivel1;
+			usuario->setPokemonRescued(juego->getPokemonSize());
+			usuario->setTime(timeUsuario);
+			file->agregarJugador(usuario);
+			file->readData();
+			file->orderPlayers();
+			frLeaderboard = gcnew Leaderboard(gcnew String(usuario->getName().c_str()), timeUsuario, juego->getPokemonSize() + 4, false);
+			frLeaderboard->setLeaderBoardNames(file->getPlayers());
+			frLeaderboard->Show();
+			tmrNivel2->Enabled = false;
+
+			this->Width = 900;
+			this->Height = 600;
+			panel1->Width = 900;
+			panel1->Height = 600;
+			buffer = space->Allocate(g, panel1->ClientRectangle);
+			CenterToScreen();
+			textBox1->Enabled = true;
+			textBox1->Visible = true;
+			label2->Visible = true;
+			label1->Visible = false;
+			tmrMenu->Enabled = true;
+			tiempoNivel1 = 60;
+			tmrSegundo->Enabled = false;
+			teclaA = teclaD = teclaS = teclaW = false;
+			juego->getMainCharacter()->setMenu();
+			juego->setMenuAgain();
 		}
 		if (juego->getPokemonSize() == 5) {
 			timeUsuario += 90 - tiempoNivel1;
 			usuario->setPokemonRescued(9);
 			usuario->setTime(timeUsuario);
 			file->agregarJugador(usuario);
-			file->orderPlayers();
-			frLeaderboard = gcnew Leaderboard(gcnew String("Lucas"), timeUsuario, 9, true);
+			file->readData();
+ 			file->orderPlayers();
+			frLeaderboard = gcnew Leaderboard(gcnew String(usuario->getName().c_str()), timeUsuario, 9, true);
 			frLeaderboard->setLeaderBoardNames(file->getPlayers());
 			frLeaderboard->Show();
 			tmrNivel2->Enabled = false;

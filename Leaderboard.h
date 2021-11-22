@@ -50,6 +50,8 @@ namespace TFExtinctHero {
 		int pokemonrescued;
 		bool victory;
 
+		
+
 		//Leaderboard
 		String^ lbn1; int lbt1; int lbp1;
 		String^ lbn2; int lbt2; int lbp2;
@@ -235,7 +237,7 @@ namespace TFExtinctHero {
 
 	public: 
 		void setLeaderBoardNames(vector<Player*>leaderboard) {
-			int aux = leaderboard.size();
+
 			lbn1 = gcnew String(leaderboard.at(0)->getName().c_str());
 			lbt1 = leaderboard.at(0)->getTime();
 			lbp1 = leaderboard.at(0)->getPokemonRescued();
