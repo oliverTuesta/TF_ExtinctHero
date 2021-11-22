@@ -29,9 +29,6 @@ public:
 			Rectangle zoom = Rectangle(x, y, width * zoomW, height * zoomH);
 			g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);
 		}
-		/*Rectangle sectionShown = Rectangle(idx * width, idy * height, width, height);
-		Rectangle zoom = Rectangle(x, y, width * zoomW, height * zoomH);
-		g->DrawImage(bmp, zoom, sectionShown, GraphicsUnit::Pixel);*/
 	}
 
 	virtual void move() {}

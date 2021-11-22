@@ -75,9 +75,6 @@ public:
 				y += dy * velocidad;
 				idy = 0;
 			}
-			/*dx *= 2;
-			dy *= 2;*/
-			/*dx = dy = 0;*/
 		}
 		else {
 			switch (potenciador)

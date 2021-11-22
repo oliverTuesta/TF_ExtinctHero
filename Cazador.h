@@ -3,9 +3,6 @@
 #include <cmath>
 
 class Cazador : public Character {
-private:
-	//Aun no se si necesita alguna variable extra
-
 public:
 	Cazador(Bitmap^ bmp) :Character() {
 		x = rand() % (700 - 40 + 1) + 40;

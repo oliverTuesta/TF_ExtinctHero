@@ -42,66 +42,9 @@ public:
 		casasMenu.push_back(new ObstaculosCasa(60, 260, 125, 80));
 		casasMenu.push_back(new ObstaculosCasa(280, 285, 175, 60));
 
-		//---------- Constructor del Menu/Inicio ----------
-		// Limites: W = 780  H = 755
-		//casasNivel1.push_back(new ObstaculosCasa(0, 0, 75, 210));	   //
-		//casasNivel1.push_back(new ObstaculosCasa(75, 130, 30, 80));	   //
-		//casasNivel1.push_back(new ObstaculosCasa(75, 0, 705, 60));	   // Obstaculos
-		//casasNivel1.push_back(new ObstaculosCasa(710, 60, 70, 450));   // del costado
-		//casasNivel1.push_back(new ObstaculosCasa(710, 580, 70, 175));  //
-		//casasNivel1.push_back(new ObstaculosCasa(500, 680, 210, 75));  // Faltan algunas
-		//casasNivel1.push_back(new ObstaculosCasa(0, 670, 300, 85));	   // imperfecciones
-		//casasNivel1.push_back(new ObstaculosCasa(0, 265, 80, 405));	   //
-
 		setLvl1Again(bmpCazador);
-		////---------- Constructor del Nivel 1 ----------
-		//casasNivel1.push_back(new ObstaculosCasa(155, 140, 65, 50));
-		//casasNivel1.push_back(new ObstaculosCasa(250, 60, 55, 70));
-		//casasNivel1.push_back(new ObstaculosCasa(350, 60, 360, 70));
-		//casasNivel1.push_back(new ObstaculosCasa(290, 190, 100, 70));
-		//casasNivel1.push_back(new ObstaculosCasa(480, 185, 30, 15));
-		//casasNivel1.push_back(new ObstaculosCasa(460, 200, 70, 40));
-		//casasNivel1.push_back(new ObstaculosCasa(440, 240, 110, 40));
-		//casasNivel1.push_back(new ObstaculosCasa(290, 380, 60, 45));
-		//casasNivel1.push_back(new ObstaculosCasa(450, 390, 110, 40));
-		//casasNivel1.push_back(new ObstaculosCasa(205, 490, 60, 70));
-		//casasNivel1.push_back(new ObstaculosCasa(360, 505, 70, 55));
-		//casasNivel1.push_back(new ObstaculosCasa(470, 505, 60, 55));
-
-		//for (int i = 0; i < 4; i++) { 
-		//	cazadores.push_back(new Cazador(bmpCazador));
-		//}
-
-		//---------- Constructor del Nivel 2 ----------// Size dimensions: 885 width 760 heigth
-		//casasNivel2.push_back(new ObstaculosCasa(0, 0, 885, 145));//tierra superior	
-		//casasNivel2.push_back(new ObstaculosCasa(0, 0, 75, 320));//arboles superior izquierda
-		//casasNivel2.push_back(new ObstaculosCasa(330, 145, 110, 160));//tierra peque;a 2
-		//casasNivel2.push_back(new ObstaculosCasa(530, 145, 75, 100));//tierra peque;a 3
-		//casasNivel2.push_back(new ObstaculosCasa(790, 145, 95, 105));//tierra peque;a 4
-
-
-		//casasNivel2.push_back(new ObstaculosCasa(155, 140, 65, 50));//arbolito superior 2
-		//casasNivel2.push_back(new ObstaculosCasa(75, 145, 70, 155));//casita superior 1
-		//casasNivel2.push_back(new ObstaculosCasa(250, 170, 80, 50));//casita superior 2
-		//casasNivel2.push_back(new ObstaculosCasa(625, 170, 130, 70));//casita superior 3
-
+	
 		setLvl2Again(bmpPotenciador);
-		//casasNivel2.push_back(new ObstaculosCasa(0, 400, 180, 360));//tierra inferior grande
-		//casasNivel2.push_back(new ObstaculosCasa(180, 640, 240, 120));//tierra inferior peque;a
-		//casasNivel2.push_back(new ObstaculosCasa(500, 680, 160, 80));//tierra inferior peque;a 2
-		//casasNivel2.push_back(new ObstaculosCasa(665, 710, 220, 50));//arboles inferior derecha 
-		//casasNivel2.push_back(new ObstaculosCasa(845, 450, 40, 310));//arboles inferior derecha 2
-
-		//casasNivel2.push_back(new ObstaculosCasa(170, 490, 85, 75));//casita inferior 1
-		//casasNivel2.push_back(new ObstaculosCasa(405, 420, 90, 90));//casita inferior 2
-		//casasNivel2.push_back(new ObstaculosCasa(645, 535, 125, 80));//casita inferior 3
-
-		//pressingSpaceBar = false;
-
-
-		//for (int i = 0; i < 3; i++) {
-		//	potenciadores.push_back(new Potenciador(bmpPotenciador->Width / 10, bmpPotenciador->Height / 3));
-		//}
 
 		secondTime = false;
 
@@ -117,21 +60,13 @@ public:
 	////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////
 	void drawEverythingMenu(Graphics^ g, Bitmap^ bmpMainCharacter, Bitmap^ bmpOldMan) {
-		/*for (int i = 0; i < casasMenu.size(); i++)	{
-			casasMenu.at(i)->draw(g);
-		}*/
-		// codigo para mostrar el hitbox de las casas
-		
 		oldman->draw(g, bmpOldMan);
-
 		if (oldman->getVisitado()) {
 			g->DrawString("Continue ->", 
 				gcnew Drawing::Font("MV Boli", 10, FontStyle::Bold),
 				Brushes::Black, 390, 225);
 		}
-
 		mainCharacter->draw(g, bmpMainCharacter);
-
 	}
 
 	int colisionMenu() {
@@ -176,7 +111,6 @@ public:
 				Brushes::Black, 690, 535);
 		}
 
-		//g->DrawRectangle(gcnew Pen(Color::Red, 3), Rectangle(700, 530, 70, 30));
 	}
 
 	bool colisionNivel1(Graphics^ g, Bitmap^ bmpmensaje) {
@@ -260,10 +194,6 @@ public:
 			potenciadores.at(i)->move();
 		}
 
-		/*for (int i = 0; i < casasNivel2.size(); i++)	{
-			casasNivel2.at(i)->draw(g);
-		}*/
-
 	}
 
 	int colisionNivel2(Graphics^ g, bool tmr) {
@@ -272,7 +202,7 @@ public:
 		// 0 = no pasa nda
 		// 1 = colision con un powerup -> activa un timer en form.h
 		// 2 = colision con un cazador
-		// 
+		// 3 = colision con un criminal
 		for (int i = 0; i < criminales.size(); i++) {
 			if (!tmr) {
 				criminales.at(i)->setSpeed(0);

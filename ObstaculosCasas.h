@@ -5,7 +5,6 @@ using namespace System::Drawing;
 class ObstaculosCasa {
 private:
 	int x, y;
-	/*int dx, dy;*/
 	int width, height;
 
 public:

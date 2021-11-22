@@ -152,18 +152,8 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Timer^ tmrNivel2;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ textBox1;
-private: System::Windows::Forms::Timer^ tmrPowerup;
-
-
-
+	private: System::Windows::Forms::Timer^ tmrPowerup;
 	private: System::Windows::Forms::Panel^ panel1;
-
-
-
-
-
-
-
 
 	protected:
 		/// <summary>
@@ -175,13 +165,16 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			{
 				delete components;
 			}
+			delete g;
+			delete space;
+			delete buffer;
+			delete juego;
+			delete file;
+			delete usuario;
 		}
-
 
 	private: System::Windows::Forms::Timer^ tmrMenu;
 	private: System::ComponentModel::IContainer^ components;
-	protected:
-
 	protected:
 
 

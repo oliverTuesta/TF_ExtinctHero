@@ -159,7 +159,6 @@ namespace TFExtinctHero {
 			return;
 		}
 		else if (!pic1) {
-			//pic2 = true;
 			pictureBox3->Visible = false;
 			pictureBox4->Visible = true;
 			button1->Text = "Cerrar Ventana";
