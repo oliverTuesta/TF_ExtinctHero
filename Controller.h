@@ -53,7 +53,6 @@ public:
 	~Controller() {
 		delete mainCharacter;
 		delete oldman;
-		delete mensaje;
 	}
 
 	//------------------ INICIO/MENU -----------------------
