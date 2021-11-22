@@ -54,7 +54,7 @@ namespace TFExtinctHero {
 			//Nivel 1
 			bmpFondoNivel1 = gcnew Bitmap("archivos/Nivel1/Nivel1.png");
 			bmpCazador = gcnew Bitmap("archivos/personajes/personajeblancoYrojo.png");
-			tiempoNivel1 = 0;//////////////////////////////////////////////////////////////////
+			tiempoNivel1 = 60;//////////////////////////////////////////////////////////////////
 			mensajedelAdmin = gcnew MensajeDelAdmin();
 
 			//Nivel 2
