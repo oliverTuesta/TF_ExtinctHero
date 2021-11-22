@@ -452,7 +452,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 			break;
 		case 3:
 			timeUsuario += 90 - tiempoNivel1;
-			usuario->setPokemonRescued(juego->getPokemonSize());
+			usuario->setPokemonRescued(juego->getPokemonSize() + 4);
 			usuario->setTime(timeUsuario);
 			file->agregarJugador(usuario);
 			file->readData();
@@ -482,7 +482,7 @@ private: System::Windows::Forms::Timer^ tmrPowerup;
 		}
 		if (tiempoNivel1 < 1) {
 			timeUsuario += 90 - tiempoNivel1;
-			usuario->setPokemonRescued(juego->getPokemonSize());
+			usuario->setPokemonRescued(juego->getPokemonSize() + 4);
 			usuario->setTime(timeUsuario);
 			file->agregarJugador(usuario);
 			file->readData();
