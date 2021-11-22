@@ -67,6 +67,7 @@ namespace TFExtinctHero {
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Timer^ tmrScreen;
 	private: System::Windows::Forms::Timer^ timer;
+	private: System::Windows::Forms::Label^ label5;
 		   int userPokemon;
 
 	protected:
@@ -110,6 +111,8 @@ namespace TFExtinctHero {
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
 			this->tmrScreen = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer = (gcnew System::Windows::Forms::Timer(this->components));
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -162,6 +165,7 @@ namespace TFExtinctHero {
 			// 
 			// panel1
 			// 
+			this->panel1->Controls->Add(this->label5);
 			this->panel1->Location = System::Drawing::Point(-2, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(824, 579);
@@ -176,6 +180,15 @@ namespace TFExtinctHero {
 			// 
 			this->timer->Tick += gcnew System::EventHandler(this, &Leaderboard::timer_Tick);
 			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(14, 9);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(444, 17);
+			this->label5->TabIndex = 0;
+			this->label5->Text = L"Creditos a: Leonel Ortega, Lucas Ruiz, Oliver Tuesta y Stevens Acha";
+			// 
 			// Leaderboard
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -188,6 +201,8 @@ namespace TFExtinctHero {
 			this->Controls->Add(this->panel1);
 			this->Name = L"Leaderboard";
 			this->Text = L"Leaderboard";
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
